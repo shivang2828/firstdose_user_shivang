@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="125" height="28" viewBox="0 0 125 28">
+  <g id="Group_1" data-name="Group 1" transform="translate(-7)">
+    <text id="RST_D" data-name="RST D" transform="translate(28 23)" fill="#f67570" font-size="21" font-family="SegoeUIBlack, Segoe UI"><tspan x="0" y="0">RST D</tspan></text>
+    <text id="F" transform="translate(7 23)" fill="#f67570" font-size="21" font-family="SegoeUIBlack, Segoe UI"><tspan x="0" y="0">F</tspan></text>
+    <text id="SE" transform="translate(108 23)" fill="#f67570" font-size="21" font-family="SegoeUIBlack, Segoe UI"><tspan x="0" y="0">SE</tspan></text>
+    <g id="_Group_" data-name="&lt;Group&gt;" transform="translate(22.6 8.187) rotate(25)">
+      <path id="_Path_" data-name="&lt;Path&gt;" d="M1.843,7.593.273,4.181A2.945,2.945,0,1,1,5.621,1.713l1.57,3.412Z" transform="translate(0 0.2)" fill="#231f20"/>
+      <path id="_Path_2" data-name="&lt;Path&gt;" d="M5.348,0l1.57,3.4a2.95,2.95,0,0,1-5.36,2.468L0,2.456Z" transform="translate(2.221 6.152)" fill="#231f20"/>
+      <path id="Path_4" data-name="Path 4" d="M5.05.223A2.9,2.9,0,0,0,1.935.807C1.02,2.083,0,3.57,0,3.57l.436.305S2.087,1.512,2.371,1.112A2.62,2.62,0,0,1,5.05.223Z" transform="translate(10.299 8.569) rotate(120)" fill="#777"/>
+      <path id="Path_5" data-name="Path 5" d="M5.811,0a2.9,2.9,0,0,1-2.45,2.011C1.795,1.892,0,1.717,0,1.717l.046-.53s2.872.254,3.361.294A2.62,2.62,0,0,0,5.811,0Z" transform="translate(4.972 6.038) rotate(-120)" fill="#777"/>
+    </g>
+    <g id="_Group_2" data-name="&lt;Group&gt;" transform="matrix(0.309, 0.951, -0.951, 0.309, 103.768, 7.1)">
+      <path id="_Path_3" data-name="&lt;Path&gt;" d="M.22,8.931a7.16,7.16,0,0,1,13.1-5.423Z" transform="translate(0 0)" fill="#231f20"/>
+      <path id="_Path_4" data-name="&lt;Path&gt;" d="M13.1,0A7.154,7.154,0,0,1,8.9,8.372,7.182,7.182,0,0,1,0,5.423Z" transform="translate(1.026 5.469)" fill="#231f20"/>
+    </g>
+  </g>
+</svg>
