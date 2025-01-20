@@ -29,6 +29,7 @@ class ColorStyle {
   static final yellowFFC22E = hex('#FFC22E');
   static final greyD9D9D9 = hex('#D9D9D9');
   static final black2C2C2C = hex('#2C2C2C');
+
   static final boxShadowColor25 = Color.fromRGBO(0, 0, 0, 0.25);
 
   static Color hex(String hexString) {

@@ -1,12 +1,12 @@
-import 'package:firstdose_user/Views/loginScreen.dart';
-import 'package:firstdose_user/homescreen/home.dart';
+import 'package:firstdose_user/Views/Auth/loginScreen.dart';
+import 'package:firstdose_user/Views/Dashboard/Home/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 
-import '../Controller/otpController.dart';
-import '../Styles/ColorStyle.dart';
+import '../../Controller/otpController.dart';
+import '../../Styles/ColorStyle.dart';
 
 class Otpscreen extends StatefulWidget {
   const Otpscreen({super.key, required this.phoneNumber});

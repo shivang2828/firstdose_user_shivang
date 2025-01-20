@@ -1,9 +1,16 @@
+import 'package:firstdose_user/Views/Auth/loginScreen.dart';
+import 'package:firstdose_user/Views/Auth/otpScreen.dart';
+import 'package:firstdose_user/Views/Dashboard/Profile/Profile.dart';
+import 'package:firstdose_user/Views/Dashboard/Upload/Search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../Styles/ColorStyle.dart';
-import 'package:flutter/src/rendering/box.dart';// Assuming you have a ColorStyle class for colors
+import '../../../Styles/ColorStyle.dart';
+// import '../Styles/ColorStyle.dart';
+import 'package:flutter/src/rendering/box.dart';
+
+import '../Search/Search.dart';// Assuming you have a ColorStyle class for colors
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,33 +30,67 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:  Container(
-        height: 60,
-        width: Get.width,
-
-        child: BottomNavigationBar(
-
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home', // Optional label for the Home button
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search', // Optional label for the Search button
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              label: 'Profile', // Optional label for the Profile button
-            ),
-          ],
-          currentIndex: 0, // To highlight the first icon initially
-          onTap: (index) {
-            // You can handle the navigation here based on the selected index
-            print('Selected index: $index');
-          },
-        ),
-      ),
+      // bottomNavigationBar:  Container(
+      //   height: 60,
+      //   width: Get.width,
+      //   color: Colors.red,
+      //
+      //   child: BottomNavigationBar(
+      //     items: [
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.home,color: Colors.red,),
+      //         label: 'Home', // Optional label for the Home button
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.search,color: Colors.red,),
+      //         label: 'Search', // Optional label for the Search button
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.account_circle,color: Colors.red,),
+      //         label: 'Profile', // Optional label for the Profile button
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.account_circle,color: Colors.red,),
+      //         label: 'Profile', // Optional label for the Profile button
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.account_circle,color: Colors.redAccent,),
+      //         label: 'Profile',
+      //
+      //       ),
+      //     ],
+      //     currentIndex: _currentIndex, // To highlight the first icon initially
+      //     onTap: (index) {
+      //       _currentIndex = index;
+      //       setState(() {
+      //
+      //       });
+      //       // You can handle the navigation here based on the selected index
+      //       print('Selected index: $index');
+      //       if(index == 4){
+      //         Get.to(() => const Profile());
+      //       }
+      //
+      //       // switch(index){
+      //       //   case 1 : Get.to(() => const SearchMedicine());
+      //       //   break;
+      //       //
+      //       //   case 2 : Get.to(() => const Profile());
+      //       //   break;
+      //       //
+      //       //   case 3 : Get.to(() => const UploadImage());
+      //       //   break;
+      //       //
+      //       //   case 3 : Get.to(() => const U());
+      //       //   break;
+      //       //
+      //       //
+      //       //
+      //       //
+      //       // }
+      //     },
+      //   ),
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: SingleChildScrollView(
@@ -133,8 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ShopCategory(),
                 // BottomNavigation(),
                 const SizedBox(height: 20),
-                
-                
+
+
 
                 // GridView.count(
                 //     shrinkWrap: true,
@@ -232,41 +273,41 @@ class _HomeScreenState extends State<HomeScreen> {
                 //   ),
                 // )
 
-      // GridView.count(
-      // shrinkWrap: true,
-      // crossAxisSpacing: 12,  // Spacing between columns
-      // mainAxisSpacing: 12,   // Spacing between rows
-      // crossAxisCount: 3,     // 3 items per row
-      // children: List.generate(9, (index) {
-      //   return Column(
-      //     children: [
-      //       ClipRRect(
-      //         borderRadius: BorderRadius.circular(10),
-      //         child: Image.asset(
-      //           'assets/images/skincare.png',
-      //           height: 60,
-      //
-      //         ),
-      //       ),
-      //       Flexible(
-      //         child: Text(
-      //           'SkinCareutgngnggjgjgghghghghghggunuhgrhg',
-      //           overflow: TextOverflow.ellipsis,
-      //           maxLines: 1,
-      //           textAlign: TextAlign.center,
-      //           style: GoogleFonts.poppins(
-      //             fontSize: 13,
-      //             fontWeight: FontWeight.bold,
-      //             color: Colors.black,
-      //           ),
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }),
-      //
+                // GridView.count(
+                // shrinkWrap: true,
+                // crossAxisSpacing: 12,  // Spacing between columns
+                // mainAxisSpacing: 12,   // Spacing between rows
+                // crossAxisCount: 3,     // 3 items per row
+                // children: List.generate(9, (index) {
+                //   return Column(
+                //     children: [
+                //       ClipRRect(
+                //         borderRadius: BorderRadius.circular(10),
+                //         child: Image.asset(
+                //           'assets/images/skincare.png',
+                //           height: 60,
+                //
+                //         ),
+                //       ),
+                //       Flexible(
+                //         child: Text(
+                //           'SkinCareutgngnggjgjgghghghghghggunuhgrhg',
+                //           overflow: TextOverflow.ellipsis,
+                //           maxLines: 1,
+                //           textAlign: TextAlign.center,
+                //           style: GoogleFonts.poppins(
+                //             fontSize: 13,
+                //             fontWeight: FontWeight.bold,
+                //             color: Colors.black,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   );
+                // }),
+                //
 
-      // ),
+                // ),
                 gridBuilder(),
 
 
@@ -319,26 +360,6 @@ class CustomSearchBar extends StatelessWidget {
   }
 }
 
-class ShopCategory extends StatelessWidget {
-  const ShopCategory({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 0.0),
-      child: Text(
-        "Shop By Category",
-        style: GoogleFonts.poppins(
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
-        ),
-      ),
-    );
-  }
-}
-
-
-
 class gridBuilder extends StatelessWidget {
 
 
@@ -387,9 +408,29 @@ class gridBuilder extends StatelessWidget {
 
 
 
+  }
+
 }
 
+
+class ShopCategory extends StatelessWidget {
+  const ShopCategory({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 0.0),
+      child: Text(
+        "Shop By Category",
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
+      ),
+    );
   }
+}
+
 
 
 

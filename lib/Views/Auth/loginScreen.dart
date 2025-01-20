@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firstdose_user/Views/otpScreen.dart';
+import 'package:firstdose_user/Views/Auth/otpScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../Controller/loginController.dart';
-import '../Styles/ColorStyle.dart';
-import '../Styles/CustomTextStyles.dart';
+import '../../Controller/loginController.dart';
+import '../../Styles/ColorStyle.dart';
+import '../../Styles/CustomTextStyles.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -100,7 +100,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (mobileFormKey.currentState!.validate()) {
                       // If form is valid, proceed to OTP screen
                       controller.userLogin();
-                      Get.to(() => Otpscreen(phoneNumber: controller.phoneController.value.text));
                     } else {
                       // Optionally show an error message if invalid
                       ScaffoldMessenger.of(context).showSnackBar(

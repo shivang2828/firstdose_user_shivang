@@ -1,9 +1,14 @@
 import 'dart:async';
 
-import 'package:firstdose_user/Views/loginScreen.dart';
+import 'package:firstdose_user/Utils/Const.dart';
+import 'package:firstdose_user/Views/Auth/loginScreen.dart';
+import 'package:firstdose_user/Views/Auth/otpScreen.dart';
+import 'package:firstdose_user/Views/Dashboard/Home/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'NavigationBar/NavigationBar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key}); // Add constructor name here
@@ -16,28 +21,37 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   // Use correct State class
 
-
   // static const String KEYLOGIN ='login';
 
   @override
   void initState() {
-    // sharedPref();
+    sharedPref();
     // TODO: implement initState
     super.initState();
-    Timer(
-      Duration(seconds: 3),
-          () {
-        Get.offAll(LoginScreen());
-      },
-    );
+
     // whereToGo();
   }
 
-  // sharedPref() {
-  //
-  // }
+  sharedPref() async {
+    SharedPreferences sharePref = await SharedPreferences.getInstance();
+    var isUserLogin = await sharePref.getBool(isLogin);
 
-
+    Timer(
+      Duration(seconds: 3),
+      () {
+        if (isUserLogin != null) {
+          if (isUserLogin) {
+            // Get.offAll(HomeScreen());
+            Get.offAll(BottomNavBar());
+          } else {
+            Get.offAll(LoginScreen());
+          }
+        } else {
+          Get.offAll(LoginScreen());
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-  }
+}
 
 //   void whereToGo() {
 //
