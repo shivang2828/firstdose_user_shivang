@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'package:firstdose_user/homescreen/dashBoard.dart';
+import 'package:firstdose_user/homescreen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OtpController extends GetxController {
   var otpController = TextEditingController().obs;
@@ -35,6 +36,7 @@ class OtpController extends GetxController {
 
       if (status == 1) {
         debugPrint('OTP Verified Successfully');
+
         Get.to(() => const HomeScreen());
       } else if (status == 0) {
         debugPrint(message ?? 'OTP verification failed');
@@ -49,3 +51,9 @@ class OtpController extends GetxController {
     }
   }
 }
+
+
+
+
+
+

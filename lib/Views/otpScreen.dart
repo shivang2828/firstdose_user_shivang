@@ -1,5 +1,5 @@
 import 'package:firstdose_user/Views/loginScreen.dart';
-import 'package:firstdose_user/homescreen/dashBoard.dart';
+import 'package:firstdose_user/homescreen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
