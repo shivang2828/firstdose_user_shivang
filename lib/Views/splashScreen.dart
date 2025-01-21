@@ -71,18 +71,4 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-//   void whereToGo() {
-//
-//     var sharedPref =SharedPreferences.getInstance();
-//
-//     var isLogin = sharedPref.getBool(KEYLOGIN);
-//
-//
-//     Timer(
-//             Duration(seconds: 1),
-//             () {
-//               Get.offAll(LoginScreen());
-//             },
-//           );
-//   }
-// }
+

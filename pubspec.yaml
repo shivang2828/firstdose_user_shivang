@@ -36,6 +36,7 @@ dependencies:
   pinput: ^5.0.1
   flutter_image_slideshow: ^0.1.6
   shared_preferences: ^2.3.5
+  webview_flutter: ^4.10.0
 
 
 

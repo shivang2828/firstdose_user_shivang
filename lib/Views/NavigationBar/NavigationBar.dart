@@ -86,9 +86,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
       case 2:
         return Watchlist();
       case 3:
-        return Profile();
-      case 4:
         return UploadImage();
+      case 4:
+        return Profile();
     }
   }
 }

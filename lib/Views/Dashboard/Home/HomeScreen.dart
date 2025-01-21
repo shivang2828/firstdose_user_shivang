@@ -7,10 +7,11 @@ import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../Styles/ColorStyle.dart';
+
 // import '../Styles/ColorStyle.dart';
 import 'package:flutter/src/rendering/box.dart';
 
-import '../Search/Search.dart';// Assuming you have a ColorStyle class for colors
+import '../Search/Search.dart'; // Assuming you have a ColorStyle class for colors
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -175,8 +176,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 // BottomNavigation(),
                 const SizedBox(height: 20),
 
-
-
                 // GridView.count(
                 //     shrinkWrap: true,
                 //   crossAxisSpacing: 5,
@@ -309,10 +308,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // ),
                 gridBuilder(),
-
-
-
-
               ],
             ),
           ),
@@ -361,11 +356,8 @@ class CustomSearchBar extends StatelessWidget {
 }
 
 class gridBuilder extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
-
     return GridView.count(
       shrinkWrap: true,
       crossAxisSpacing: 12,
@@ -382,8 +374,6 @@ class gridBuilder extends StatelessWidget {
               child: Image.asset(
                 'assets/images/skincare.png',
                 height: 50,
-
-
               ),
             ),
             Flexible(
@@ -402,16 +392,9 @@ class gridBuilder extends StatelessWidget {
           ],
         );
       }),
-
     );
-
-
-
-
   }
-
 }
-
 
 class ShopCategory extends StatelessWidget {
   const ShopCategory({super.key});
@@ -430,7 +413,3 @@ class ShopCategory extends StatelessWidget {
     );
   }
 }
-
-
-
-
