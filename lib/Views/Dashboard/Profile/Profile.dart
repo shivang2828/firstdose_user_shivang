@@ -1,6 +1,9 @@
 import 'package:firstdose_user/Controller/WebView.dart';
 import 'package:firstdose_user/Styles/ImageStyle.dart';
+import 'package:firstdose_user/Utils/CustomAppBar.dart';
 import 'package:firstdose_user/Views/Auth/loginScreen.dart';
+import 'package:firstdose_user/Views/Dashboard/Profile/EditProfile.dart';
+import 'package:firstdose_user/Views/Dashboard/Profile/WishList.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -28,27 +31,24 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        appbarTitle: 'Settings',
+        isCartIcon: false,
+        isLeading: false,
+      ),
       body: Padding(
+
         padding: EdgeInsets.all(16),
         child: SingleChildScrollView(
+
           child: SafeArea(
+
               child: Column(
+
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Setttings",
-                    style: GoogleFonts.poppins(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+
               const SizedBox(height: 10),
               Container(
                 // alignment: Alignment.centerLeft,
@@ -84,10 +84,15 @@ class _ProfileState extends State<Profile> {
                                     color: ColorStyle.themeColor,
                                     fontWeight: FontWeight.bold,
                                   )),
-                              Text('Edit Profile',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 15,
-                                  )),
+                              InkWell(
+                                onTap: () {
+                                  Get.to(() => EditProfile());
+                                },
+                                child: Text('Edit Profile',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 15,
+                                    )),
+                              ),
                             ],
                           ),
                         ],
@@ -131,7 +136,12 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               const SizedBox(height: 30),
-              customContainer(imageName: ImageStyle.wishlist, name: 'Wishlist'),
+              InkWell(
+                  onTap: (){
+                    Get.to(() => Wishlist());
+                  },
+
+                  child: customContainer(imageName: ImageStyle.wishlist, name: 'Wishlist')),
               const SizedBox(height: 30),
               InkWell(
                   onTap: () {
@@ -146,7 +156,8 @@ class _ProfileState extends State<Profile> {
                   onTap: () => showDialog<String>(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Logout'),
+                          title: const Text('FirstDose',
+                          ),
                           content: const Text('Are you Sure, want to logout'),
                           actions: <Widget>[
                             TextButton(
@@ -170,6 +181,8 @@ class _ProfileState extends State<Profile> {
                       ),
                   child: customContainer(
                       imageName: ImageStyle.logout, name: 'LogOut')),
+              const SizedBox(height: 30),
+              customContainer(name: 'Delete Account', imageName: ImageStyle.deleteAccount),
               const SizedBox(height: 30),
             ],
           )),

@@ -10,14 +10,15 @@ import '../Dashboard/Search/Search.dart';
 import '../Dashboard/Upload/Search.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+   BottomNavBar({super.key, this.currentIndex = 0});
 
+  int currentIndex = 0;
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _currentIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,16 +65,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
               label: 'Watchlist',
             ),
           ],
-          currentIndex: _currentIndex,
+          currentIndex: widget.currentIndex,
           onTap: (index) {
-            _currentIndex = index;
+            widget.currentIndex = index;
             setState(() {});
             // You can handle the navigation here based on the selected index
             // print('Selected index: $index');
           },
         ),
       ),
-      body: _openPage(index: _currentIndex),
+      body: _openPage(index: widget.currentIndex),
     );
   }
 
