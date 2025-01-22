@@ -1,3 +1,4 @@
+import 'package:firstdose_user/Styles/ColorStyle.dart';
 import 'package:firstdose_user/Views/Dashboard/Home/HomeScreen.dart';
 import 'package:firstdose_user/Views/Dashboard/Order/watchList.dart';
 import 'package:firstdose_user/Views/Dashboard/Profile/Profile.dart';
@@ -10,14 +11,15 @@ import '../Dashboard/Search/Search.dart';
 import '../Dashboard/Upload/Search.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+   BottomNavBar({super.key, this.currentIndex = 0});
 
+  int currentIndex = 0;
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _currentIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,36 +27,40 @@ class _BottomNavBarState extends State<BottomNavBar> {
       bottomNavigationBar: Container(
         height: 60,
         width: Get.width,
-        color: Colors.red,
+        color: ColorStyle.themeColor,
         child: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
+
               icon: Icon(
-                Icons.home,
-                color: Colors.red,
+                Icons.home_outlined,
+                color: ColorStyle.themeColor,
+
               ),
-              label: 'Home', // Optional label for the Home button
+              label: 'Home',
+
+
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.search,
                 color: Colors.red,
               ),
-              label: 'Search', // Optional label for the Search button
+              label: 'Search',
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.account_circle,
                 color: Colors.red,
               ),
-              label: 'Profile', // Optional label for the Profile button
+              label: 'Profile',
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.account_circle,
                 color: Colors.red,
               ),
-              label: 'Profile', // Optional label for the Profile button
+              label: 'Profile',
             ),
             BottomNavigationBarItem(
               icon: Icon(
@@ -64,16 +70,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
               label: 'Watchlist',
             ),
           ],
-          currentIndex: _currentIndex,
+          currentIndex: widget.currentIndex,
           onTap: (index) {
-            _currentIndex = index;
+            widget.currentIndex = index;
             setState(() {});
-            // You can handle the navigation here based on the selected index
-            // print('Selected index: $index');
+
           },
         ),
       ),
-      body: _openPage(index: _currentIndex),
+      body: _openPage(index: widget.currentIndex),
     );
   }
 

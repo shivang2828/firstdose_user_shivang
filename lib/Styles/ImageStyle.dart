@@ -54,4 +54,5 @@ class ImageStyle {
   static const String locationPinIcon = 'assets/images/locationPinIcon.png';
   static const String ordersbottombaricon =
       'assets/images/ordersbottombaricon.svg';
+  static const String multiVitamin = 'assets/images/multivitamins.png';
 }

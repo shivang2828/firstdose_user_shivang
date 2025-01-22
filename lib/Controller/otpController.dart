@@ -60,7 +60,7 @@ Map<String ,dynamic> body = {
 
         // Get.offAll()
 
-        Get.offAll(() => const BottomNavBar());
+        Get.offAll(() =>  BottomNavBar());
       } else if (status == 0) {
         debugPrint(message ?? 'OTP verification failed');
         Get.snackbar('Error', message ?? 'OTP verification failed');

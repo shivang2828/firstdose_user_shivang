@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // var h = Get.height;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(15), // Unified padding for all sides
@@ -131,14 +132,37 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   // Middle Text widget function
+  // Widget _buildMiddleText() {
+  //   return Text(
+  //     "Login to your account",
+  //     style: GoogleFonts.poppins(
+  //       fontSize: 22,
+  //       fontWeight: FontWeight.w500,
+  //       color: ColorStyle.blackcolor,
+  //     ),
+  //   );
+  // }
   Widget _buildMiddleText() {
-    return Text(
-      "Login to your account",
-      style: GoogleFonts.poppins(
-        fontSize: 22,
-        fontWeight: FontWeight.w500,
-        color: ColorStyle.blackcolor,
-      ),
+    return Stack(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Enter your mobile number',
+              style: CustomTextStyles.poppinsBoldBlack(fontSize: 25),
+            ),
+            const SizedBox(
+              height: 13,
+            ),
+            Text(
+              'We will send to you a 6 digit confirmation code.',
+              style: CustomTextStyles.poppinsRegularCustom(
+                  fontSize: 14, color: ColorStyle.greycolor),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
