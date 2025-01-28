@@ -1,13 +1,10 @@
 import 'package:firstdose_user/Styles/ImageStyle.dart';
 import 'package:firstdose_user/Utils/CustomAppBar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../Styles/ColorStyle.dart';
-import '../../../Styles/CustomTextStyles.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});

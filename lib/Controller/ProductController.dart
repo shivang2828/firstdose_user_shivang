@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class  ProductController extends GetxController{
+class ProductController extends GetxController {
+  var isLoading = true.obs;
 
   var productModel = ProductModel().obs;
-
 
   product() async {
     Uri url = Uri.parse('https://kbdevs.com/firstdose/api/users/v1/products');
@@ -32,22 +32,16 @@ class  ProductController extends GetxController{
       var message = data['message'];
 
       if (status == 1) {
-          productModel.value = ProductModel.fromJson(data);
+        isLoading(false);
 
-          debugPrint(productModel.value.data!.products![0].name);
+        productModel.value = ProductModel.fromJson(data);
+
+        debugPrint(productModel.value.data!.products![0].name);
       } else if (status == 0) {
       } else {}
     } catch (e) {
       debugPrint('Error: $e');
       Get.snackbar('Error', 'Failed to Send OTP. Please try again.');
     }
-
-
   }
-
-
-
-
-
-
 }

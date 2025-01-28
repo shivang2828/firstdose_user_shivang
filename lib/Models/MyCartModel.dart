@@ -1,24 +1,12 @@
-class ProductModel {
+class MyCartModel {
   int? status;
-  int? perPageData;
-  int? totalData;
-  int? page;
   Data? data;
   String? message;
 
-  ProductModel(
-      {this.status,
-        this.perPageData,
-        this.totalData,
-        this.page,
-        this.data,
-        this.message});
+  MyCartModel({this.status, this.data, this.message});
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
+  MyCartModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    perPageData = json['per_page_data'];
-    totalData = json['total_data'];
-    page = json['page'];
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
     message = json['message'];
   }
@@ -26,9 +14,6 @@ class ProductModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
-    data['per_page_data'] = perPageData;
-    data['total_data'] = totalData;
-    data['page'] = page;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -38,36 +23,137 @@ class ProductModel {
 }
 
 class Data {
-  List<Products>? products;
+  int? id;
+  int? userId;
+  String? cartSubTotal;
+  String? cartTotal;
+  Null couponId;
+  String? couponDiscountAmount;
+  Null couponDiscountType;
+  Null deletedAt;
+  String? createdAt;
+  String? updatedAt;
+  List<CartItem>? cartItem;
 
-  Data({this.products});
+  Data(
+      {this.id,
+        this.userId,
+        this.cartSubTotal,
+        this.cartTotal,
+        this.couponId,
+        this.couponDiscountAmount,
+        this.couponDiscountType,
+        this.deletedAt,
+        this.createdAt,
+        this.updatedAt,
+        this.cartItem});
 
   Data.fromJson(Map<String, dynamic> json) {
-    if (json['products'] != null) {
-      products = <Products>[];
-      json['products'].forEach((v) {
-        products!.add(Products.fromJson(v));
+    id = json['id'];
+    userId = json['user_id'];
+    cartSubTotal = json['cart_sub_total'];
+    cartTotal = json['cart_total'];
+    couponId = json['coupon_id'];
+    couponDiscountAmount = json['coupon_discount_amount'];
+    couponDiscountType = json['coupon_discount_type'];
+    deletedAt = json['deleted_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    if (json['cart_item'] != null) {
+      cartItem = <CartItem>[];
+      json['cart_item'].forEach((v) {
+        cartItem!.add(CartItem.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (products != null) {
-      data['products'] = products!.map((v) => v.toJson()).toList();
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['cart_sub_total'] = cartSubTotal;
+    data['cart_total'] = cartTotal;
+    data['coupon_id'] = couponId;
+    data['coupon_discount_amount'] = couponDiscountAmount;
+    data['coupon_discount_type'] = couponDiscountType;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (cartItem != null) {
+      data['cart_item'] = cartItem!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Products {
+class CartItem {
+  int? id;
+  int? cartId;
+  int? productId;
+  int? quantity;
+  String? perProductPrice;
+  String? totalProductPrice;
+  String? perProductDiscount;
+  Null deletedAt;
+  String? createdAt;
+  String? updatedAt;
+  Product? product;
+
+  CartItem(
+      {this.id,
+        this.cartId,
+        this.productId,
+        this.quantity,
+        this.perProductPrice,
+        this.totalProductPrice,
+        this.perProductDiscount,
+        this.deletedAt,
+        this.createdAt,
+        this.updatedAt,
+        this.product});
+
+  CartItem.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    cartId = json['cart_id'];
+    productId = json['product_id'];
+    quantity = json['quantity'];
+    perProductPrice = json['per_product_price'];
+    totalProductPrice = json['total_product_price'];
+    perProductDiscount = json['per_product_discount'];
+    deletedAt = json['deleted_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    product =
+    json['product'] != null ? Product.fromJson(json['product']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['cart_id'] = cartId;
+    data['product_id'] = productId;
+    data['quantity'] = quantity;
+    data['per_product_price'] = perProductPrice;
+    data['total_product_price'] = totalProductPrice;
+    data['per_product_discount'] = perProductDiscount;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (product != null) {
+      data['product'] = product!.toJson();
+    }
+    return data;
+  }
+}
+
+class Product {
   int? id;
   int? categoryId;
   String? name;
   String? shortDescription;
   String? description;
   int? price;
-  String? discountedPrice;
+  int? discountedPrice;
   Null drugInteractions;
   Null sideEffects;
   Null productManufactured;
@@ -81,11 +167,8 @@ class Products {
   String? createdAt;
   String? updatedAt;
   Category? category;
-  String? originalPrice;
-  int? addedInWishlisht;
-  int? cartQuantity;
 
-  Products(
+  Product(
       {this.id,
         this.categoryId,
         this.name,
@@ -105,12 +188,9 @@ class Products {
         this.deletedAt,
         this.createdAt,
         this.updatedAt,
-        this.category,
-        this.originalPrice,
-        this.addedInWishlisht,
-        this.cartQuantity});
+        this.category});
 
-  Products.fromJson(Map<String, dynamic> json) {
+  Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     categoryId = json['category_id'];
     name = json['name'];
@@ -133,9 +213,6 @@ class Products {
     category = json['category'] != null
         ? Category.fromJson(json['category'])
         : null;
-    originalPrice = json['original_price'];
-    addedInWishlisht = json['added_in_wishlisht'];
-    cartQuantity = json['cart_quantity'];
   }
 
   Map<String, dynamic> toJson() {
@@ -162,9 +239,6 @@ class Products {
     if (category != null) {
       data['category'] = category!.toJson();
     }
-    data['original_price'] = originalPrice;
-    data['added_in_wishlisht'] = addedInWishlisht;
-    data['cart_quantity'] = cartQuantity;
     return data;
   }
 }

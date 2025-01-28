@@ -7,17 +7,17 @@ class DashBoardModel {
 
   DashBoardModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = this.message;
+    data['message'] = message;
     return data;
   }
 }
@@ -39,28 +39,28 @@ class Data {
     if (json['categories'] != null) {
       categories = <Categories>[];
       json['categories'].forEach((v) {
-        categories!.add(new Categories.fromJson(v));
+        categories!.add(Categories.fromJson(v));
       });
     }
     if (json['popular_products'] != null) {
       popularProducts = <PopularProducts>[];
       json['popular_products'].forEach((v) {
-        popularProducts!.add(new PopularProducts.fromJson(v));
+        popularProducts!.add(PopularProducts.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     // if (this.banners != null) {
     //   data['banners'] = this.banners!.map((v) => v?.toJson()).toList();
     // }
-    if (this.categories != null) {
-      data['categories'] = this.categories!.map((v) => v.toJson()).toList();
+    if (categories != null) {
+      data['categories'] = categories!.map((v) => v.toJson()).toList();
     }
-    if (this.popularProducts != null) {
+    if (popularProducts != null) {
       data['popular_products'] =
-          this.popularProducts!.map((v) => v.toJson()).toList();
+          popularProducts!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -73,7 +73,7 @@ class Categories {
   int? ordering;
   String? status;
   String? showOnApp;
-  Null? deletedAt;
+  Null deletedAt;
   String? createdAt;
   String? updatedAt;
 
@@ -101,16 +101,16 @@ class Categories {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image'] = this.image;
-    data['ordering'] = this.ordering;
-    data['status'] = this.status;
-    data['show_on_app'] = this.showOnApp;
-    data['deleted_at'] = this.deletedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['image'] = image;
+    data['ordering'] = ordering;
+    data['status'] = status;
+    data['show_on_app'] = showOnApp;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -123,16 +123,16 @@ class PopularProducts {
   String? description;
   int? price;
   int? discountedPrice;
-  Null? drugInteractions;
-  Null? sideEffects;
-  Null? productManufactured;
-  Null? saltComposition;
+  Null drugInteractions;
+  Null sideEffects;
+  Null productManufactured;
+  Null saltComposition;
   int? ordering;
   String? status;
   String? images;
   String? soldOut;
   String? isPopular;
-  Null? deletedAt;
+  Null deletedAt;
   String? createdAt;
   String? updatedAt;
   Categories? category;
@@ -182,36 +182,36 @@ class PopularProducts {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     category = json['category'] != null
-        ? new Categories.fromJson(json['category'])
+        ? Categories.fromJson(json['category'])
         : null;
     addedInWishlisht = json['added_in_wishlisht'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['category_id'] = this.categoryId;
-    data['name'] = this.name;
-    data['short_description'] = this.shortDescription;
-    data['description'] = this.description;
-    data['price'] = this.price;
-    data['discounted_price'] = this.discountedPrice;
-    data['drug_interactions'] = this.drugInteractions;
-    data['side_effects'] = this.sideEffects;
-    data['product_manufactured'] = this.productManufactured;
-    data['salt_composition'] = this.saltComposition;
-    data['ordering'] = this.ordering;
-    data['status'] = this.status;
-    data['images'] = this.images;
-    data['sold_out'] = this.soldOut;
-    data['is_popular'] = this.isPopular;
-    data['deleted_at'] = this.deletedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.category != null) {
-      data['category'] = this.category!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['category_id'] = categoryId;
+    data['name'] = name;
+    data['short_description'] = shortDescription;
+    data['description'] = description;
+    data['price'] = price;
+    data['discounted_price'] = discountedPrice;
+    data['drug_interactions'] = drugInteractions;
+    data['side_effects'] = sideEffects;
+    data['product_manufactured'] = productManufactured;
+    data['salt_composition'] = saltComposition;
+    data['ordering'] = ordering;
+    data['status'] = status;
+    data['images'] = images;
+    data['sold_out'] = soldOut;
+    data['is_popular'] = isPopular;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (category != null) {
+      data['category'] = category!.toJson();
     }
-    data['added_in_wishlisht'] = this.addedInWishlisht;
+    data['added_in_wishlisht'] = addedInWishlisht;
     return data;
   }
 }

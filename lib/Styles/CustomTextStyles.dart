@@ -1,10 +1,8 @@
-import 'dart:ui';
 
 import 'package:firstdose_user/Styles/ColorStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'ColorStyle.dart';
 
 class CustomTextStyles {
   static poppinsMediumBlack({required double fontSize}) => GoogleFonts.poppins(

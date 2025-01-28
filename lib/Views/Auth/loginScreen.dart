@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firstdose_user/Views/Auth/otpScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Controller/loginController.dart';

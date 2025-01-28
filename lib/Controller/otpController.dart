@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Views/Dashboard/Home/HomeScreen.dart';
 import '../Views/NavigationBar/NavigationBar.dart';
 
 class OtpController extends GetxController {
@@ -49,7 +48,9 @@ Map<String ,dynamic> body = {
 
       if (status == 1) {
         debugPrint('OTP Verified Successfully');
-        var token = data['bearer_token'].toString();
+        // var token = data['bearer_token'].toString();
+        var token = data['data']['bearer_token'].toString();
+
 
         SharedPreferences sharedPref = await SharedPreferences.getInstance();
         await sharedPref.setBool(isLogin, true);
@@ -57,8 +58,13 @@ Map<String ,dynamic> body = {
 
 
 
+        debugPrint('api token is $token');
+
+
+
 
         // Get.offAll()
+
 
         Get.offAll(() =>  BottomNavBar());
       } else if (status == 0) {

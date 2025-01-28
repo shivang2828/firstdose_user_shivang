@@ -1,14 +1,13 @@
+import 'package:firstdose_user/Controller/AddressController.dart';
 import 'package:firstdose_user/Utils/CustomAppBar.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firstdose_user/Views/Cart/ShippingInformation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Styles/ColorStyle.dart';
 import '../../Styles/CustomTextStyles.dart';
-import '../../Styles/ImageStyle.dart';
-import '../NavigationBar/NavigationBar.dart';
 
 class FinalAmount extends StatefulWidget {
   const FinalAmount({super.key});
@@ -18,6 +17,16 @@ class FinalAmount extends StatefulWidget {
 }
 
 class _FinalAmountState extends State<FinalAmount> {
+  final controller = Get.put(AddressController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+    controller.addressController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +74,10 @@ class _FinalAmountState extends State<FinalAmount> {
                       style: CustomTextStyles.poppinsMediumBlack(fontSize: 14),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        
+                        Get.to(() => ShippingInformation());
+                      },
                       child: Text(
                         'Add new address',
                         style:
@@ -78,6 +90,115 @@ class _FinalAmountState extends State<FinalAmount> {
                   height: 20,
                 ),
 
+                Obx(
+                      () {
+                    if (controller.isLoading.value) {
+                      return Center(
+                        child: SpinKitRotatingPlain(
+                          color: ColorStyle.themeColor,
+                          size: 50.0,
+                        ),
+                      );
+                    } else {
+                      return ListView.builder(
+                        padding: const EdgeInsets.all(8),
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: controller.model.value.data!.length,
+                        itemBuilder: (context, index) {
+                          var data = controller.model.value.data![index];
+                          return Obx(
+                                () => Container(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              margin: EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: (controller.selectedAddress.value == index)
+                                      ? ColorStyle.themeColor
+                                      : ColorStyle.black2C2C2C,
+                                  width: 1,
+                                ),
+                              ),
+                              child: RadioListTile(
+                                contentPadding: EdgeInsets.zero,
+                                activeColor: ColorStyle.themeColor,
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      data.name!,
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      '${data.fullAddress!} , ${data.city!} , ${data.state!} , ${data.pinCode!}',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 15,
+                                      ),
+
+
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      '${data.phoneNumber.toString()}',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 15,
+                                      )
+
+
+                                    ),
+                                  ],
+                                ),
+                                value: index,
+                                groupValue: controller.model.value,
+                                onChanged: (value) {
+                                  setState(() {
+                                    controller.selectedAddress.value = index;
+                                  });
+                                  // controller.selectedAddress.value = index;
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
+
+
+
+                const SizedBox(
+                  height: 20,
+                ),
+
+                SizedBox(
+                  width: Get.width,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorStyle.themeColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(12), // Button border radius
+                      ),
+                    ),
+                    child: Text(
+                      "Continue",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white, // Text color
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -86,21 +207,6 @@ class _FinalAmountState extends State<FinalAmount> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 Widget paymentSummery({required String name, required int price}) {
   return Row(
@@ -122,5 +228,29 @@ Widget paymentSummery({required String name, required int price}) {
         ),
       ),
     ],
+  );
+}
+
+Widget listContainer({required String name}) {
+  return Container(
+    width: Get.width,
+    padding: EdgeInsets.all(8),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(16),
+      color: ColorStyle.whitecolor,
+      border: Border.all(
+        width: 0.5,
+      ),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        name,
+        style: GoogleFonts.poppins(
+          fontSize: 16,
+          color: Colors.black, // Adjust text color as needed
+        ),
+      ),
+    ),
   );
 }

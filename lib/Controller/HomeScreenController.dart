@@ -8,6 +8,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class DashBoardController extends GetxController {
+
+  var isLoading = true.obs;
+
   var dashboardModel = DashBoardModel().obs;
   var siteSettingModel = SiteSeetingModel().obs;
 
@@ -56,6 +59,8 @@ class DashBoardController extends GetxController {
       var message = data['message'];
 
       if (status == 1) {
+
+         isLoading(false);
         dashboardModel.value = DashBoardModel.fromJson(data);
 
         debugPrint(dashboardModel.value.data!.categories![0].name);

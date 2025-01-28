@@ -1,11 +1,9 @@
-import 'dart:ffi';
 
+import 'package:firstdose_user/Controller/MyCartController.dart';
 import 'package:firstdose_user/Utils/CustomAppBar.dart';
 import 'package:firstdose_user/Views/Cart/FInalAmount.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Styles/ColorStyle.dart';
@@ -21,8 +19,17 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  final controller = Get.put(MyCartController());
+
   List<String> nameOfContainer = ['a', 'b', 'c', 'd', 'e'];
   var h = Get.height;
+
+  @override
+  void initState() {
+    controller.myCart();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,13 +99,16 @@ class _CartState extends State<Cart> {
                       ),
                     ),
                   ),
+                  // SizedBox(
+                  //   height: h * 0.1,
+                  // ),
                   SizedBox(
-                    height: h * 0.1,
-                  ),
-                  Container(
                       width: Get.width,
                       height: 56,
-                      child: button(name: 'Cheackout')),
+                      child: button(name: 'Cheackout'),
+
+
+                  ),
                   // SizedBox(
                   //   height: h * 0.1,
                   // ),
@@ -115,7 +125,7 @@ class _CartState extends State<Cart> {
       child: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -132,6 +142,7 @@ class _CartState extends State<Cart> {
             ),
             const SizedBox(width: 10),
             Expanded(
+              flex: 5,
               child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -171,7 +182,6 @@ class _CartState extends State<Cart> {
                   ],
                 ),
               ),
-              flex: 5,
             ),
             Expanded(
               child: InkWell(

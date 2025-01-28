@@ -1,9 +1,12 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firstdose_user/Controller/ProductDetailController.dart';
+import 'package:firstdose_user/Views/Cart/Cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart'; // Importing the SpinKit package
 
+import '../../../Styles/ColorStyle.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({super.key});
@@ -13,61 +16,175 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  final controller = Get.put(ProductDetailController());
+  var h = Get.height;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.productdetails();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-          padding: EdgeInsets.all(8),
-           child: SafeArea(
-               child: SingleChildScrollView(
-                 child: Column(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                     ImageSlideshow(
-                       indicatorColor: Colors.blue,
-                       width: Get.width,
-                       autoPlayInterval: 3000,
-                       isLoop: true,
-                       children: [
-                         ClipRRect(
-                           borderRadius: BorderRadius.circular(10),
-                           clipBehavior: Clip.antiAlias,
-                           child: Image.asset(
-                             'assets/images/image1.jpg',
-                             fit: BoxFit.cover,
-                           ),
-                         ),
-                         ClipRRect(
-                           borderRadius: BorderRadius.circular(10),
-                           clipBehavior: Clip.antiAlias,
-                           child: Image.asset(
-                             'assets/images/image1.jpg',
-                             fit: BoxFit.cover,
-                           ),
-                         ),
-                         ClipRRect(
-                           borderRadius: BorderRadius.circular(10),
-                           clipBehavior: Clip.antiAlias,
-                           child: Image.asset(
-                             'assets/images/image1.jpg',
-                             fit: BoxFit.cover,
-                           ),
-                         ),
-                       ],
-                     ),
-                   ],
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return Center(
+            child: SpinKitRotatingPlain(
+              color: ColorStyle.themeColor,
+              size: 50.0,
+            ),
+          );
+        } else {
+          if (controller.productdetailModel.value.data!.products!.isEmpty) {
+            return Center(child: Text("No product details available"));
+          }
+
+          var product = controller.productdetailModel.value.data!.products![0];
+          var images = product.images ?? [];
+
+          return Padding(
+            padding: EdgeInsets.all(8),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Image Slideshow
+                    if (images.isNotEmpty)
+                      ImageSlideshow(
+                        indicatorColor: ColorStyle.themeColor,
+                        width: Get.width,
+                        height: h * 0.4,
+                        autoPlayInterval: 3000,
+                        isLoop: true,
+                        children: images.map((Url) {
+                          return ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              clipBehavior: Clip.antiAlias,
+                              child: Image.network(
+                                Url,
+                                fit: BoxFit.cover,
+                                // errorBuilder: (context, error, stackTrace) {
+                                //   return Center(child: Icon(Icons.error, color: Colors.red));
+                                // },
+                              )
+                              // : Image.asset(imageUrl, fit: BoxFit.cover),
+                              );
+                        }).toList(),
+                      )
+                    else
+                      Center(
+                          child: Text("No images available for this product")),
+                    const SizedBox(
+                      height: 16,
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.all(16.0),
+                      width: Get.width,
+                      height: h * 0.5,
+                      decoration: BoxDecoration(
+                        color: ColorStyle.whitecolor,
 
 
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                '${product.name}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Text(
+                                'by ${product.description}',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 16),
+                          Row(
+                            children: [
+                              Text(
+                                '${product.price}',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: ColorStyle.themeColor),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Stack(
+                            children: [
+                              Text(
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 9,
+                                '${product.description} Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                ),
+                              ),
 
-
-                 ),
-               ),
-           ),
-
-
-
-      ),
+                              Padding(
+                                padding: EdgeInsets.only(top: h*0.2),
+                                child: SizedBox(
+                                  width: Get.width,
+                                  height: 56,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Get.to(() => Cart());
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: ColorStyle.themeColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            12), // Button border radius
+                                      ),
+                                    ),
+                                    child: Text(
+                                      "Add To Cart",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white, // Text color
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+      }),
     );
   }
 }

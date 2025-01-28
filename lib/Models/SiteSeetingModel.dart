@@ -9,17 +9,17 @@ class SiteSeetingModel {
 
   SiteSeetingModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = this.message;
+    data['message'] = message;
     return data;
   }
 }
@@ -68,21 +68,21 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['terms_and_condition'] = this.termsAndCondition;
-    data['privacy_policy'] = this.privacyPolicy;
-    data['contact_us'] = this.contactUs;
-    data['faq'] = this.faq;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['terms_and_condition'] = termsAndCondition;
+    data['privacy_policy'] = privacyPolicy;
+    data['contact_us'] = contactUs;
+    data['faq'] = faq;
     // if (this.profile != null) {
     //   data['profile'] = this.profile!.toJson();
     // }
-    data['cart_quantity'] = this.cartQuantity;
-    data['update_android'] = this.updateAndroid;
-    data['update_ios'] = this.updateIos;
-    data['update_link_android'] = this.updateLinkAndroid;
-    data['update_link_ios'] = this.updateLinkIos;
-    data['update_message'] = this.updateMessage;
-    data['is_cancel_show'] = this.isCancelShow;
+    data['cart_quantity'] = cartQuantity;
+    data['update_android'] = updateAndroid;
+    data['update_ios'] = updateIos;
+    data['update_link_android'] = updateLinkAndroid;
+    data['update_link_ios'] = updateLinkIos;
+    data['update_message'] = updateMessage;
+    data['is_cancel_show'] = isCancelShow;
     return data;
   }
 }

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 
 import '../Styles/ColorStyle.dart';
 import '../Styles/CustomTextStyles.dart';
-import '../Utils/Const.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar(

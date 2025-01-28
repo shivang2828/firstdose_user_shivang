@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:firstdose_user/Utils/Const.dart';
 import 'package:firstdose_user/Views/Auth/loginScreen.dart';
-import 'package:firstdose_user/Views/Auth/otpScreen.dart';
-import 'package:firstdose_user/Views/Dashboard/Home/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   sharedPref() async {
     SharedPreferences sharePref = await SharedPreferences.getInstance();
-    var isUserLogin = await sharePref.getBool(isLogin);
+    var isUserLogin = sharePref.getBool(isLogin);
 
     Timer(
       Duration(seconds: 3),

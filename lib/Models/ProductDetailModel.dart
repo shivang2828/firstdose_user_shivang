@@ -1,24 +1,12 @@
-class ProductModel {
+class ProductDetailModel {
   int? status;
-  int? perPageData;
-  int? totalData;
-  int? page;
   Data? data;
   String? message;
 
-  ProductModel(
-      {this.status,
-        this.perPageData,
-        this.totalData,
-        this.page,
-        this.data,
-        this.message});
+  ProductDetailModel({this.status, this.data, this.message});
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
+  ProductDetailModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    perPageData = json['per_page_data'];
-    totalData = json['total_data'];
-    page = json['page'];
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
     message = json['message'];
   }
@@ -26,9 +14,6 @@ class ProductModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
-    data['per_page_data'] = perPageData;
-    data['total_data'] = totalData;
-    data['page'] = page;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -74,7 +59,7 @@ class Products {
   Null saltComposition;
   int? ordering;
   String? status;
-  String? images;
+  List<String>? images;
   String? soldOut;
   String? isPopular;
   Null deletedAt;
@@ -124,7 +109,7 @@ class Products {
     saltComposition = json['salt_composition'];
     ordering = json['ordering'];
     status = json['status'];
-    images = json['images'];
+    images = json['images'].cast<String>();
     soldOut = json['sold_out'];
     isPopular = json['is_popular'];
     deletedAt = json['deleted_at'];

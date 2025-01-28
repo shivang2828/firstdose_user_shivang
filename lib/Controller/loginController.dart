@@ -9,6 +9,8 @@ class LoginController extends GetxController {
   // Define the TextEditingController for the phone input
   var phoneController = TextEditingController().obs;
 
+  String token = '';
+
   userLogin() async {
     Uri url = Uri.parse('https://kbdevs.com/firstdose/api/users/v1/send-otp');
 

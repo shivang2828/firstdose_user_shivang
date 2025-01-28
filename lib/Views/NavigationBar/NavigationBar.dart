@@ -2,10 +2,8 @@ import 'package:firstdose_user/Styles/ColorStyle.dart';
 import 'package:firstdose_user/Views/Dashboard/Home/HomeScreen.dart';
 import 'package:firstdose_user/Views/Dashboard/Order/watchList.dart';
 import 'package:firstdose_user/Views/Dashboard/Profile/Profile.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../Dashboard/Search/Search.dart';
 import '../Dashboard/Upload/Search.dart';

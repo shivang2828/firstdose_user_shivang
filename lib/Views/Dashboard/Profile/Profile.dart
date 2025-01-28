@@ -6,13 +6,10 @@ import 'package:firstdose_user/Views/Dashboard/Profile/EditProfile.dart';
 import 'package:firstdose_user/Views/Dashboard/Profile/WishList.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import '../../../Styles/ColorStyle.dart';
 import '../../../Styles/CustomTextStyles.dart';
-import '../../../Utils/Const.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -145,9 +142,13 @@ class _ProfileState extends State<Profile> {
               const SizedBox(height: 30),
               InkWell(
                   onTap: () {
-                    Get.to(() => WebView(
-                          url: 'https://kbdevs.com/firstdose/faq',
-                        ));
+                    
+                    Get.to(() => SafeArea(
+
+                      child: WebView(
+                            url: 'https://kbdevs.com/firstdose/faq',
+                          ),
+                    ));
                   },
                   child:
                       customContainer(imageName: ImageStyle.faq, name: 'FAQ')),

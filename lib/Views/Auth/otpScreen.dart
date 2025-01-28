@@ -1,5 +1,3 @@
-import 'package:firstdose_user/Views/Auth/loginScreen.dart';
-import 'package:firstdose_user/Views/Dashboard/Home/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
