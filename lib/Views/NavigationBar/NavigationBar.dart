@@ -1,12 +1,13 @@
 import 'package:firstdose_user/Styles/ColorStyle.dart';
 import 'package:firstdose_user/Views/Dashboard/Home/HomeScreen.dart';
-import 'package:firstdose_user/Views/Dashboard/Order/watchList.dart';
+// import 'package:firstdose_user/Views/Dashboard/Order/watchList.dart';
 import 'package:firstdose_user/Views/Dashboard/Profile/Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../Dashboard/Search/Search.dart';
-import '../Dashboard/Upload/Search.dart';
+import '../Dashboard/Profile/WishList.dart';
+import '../Dashboard/Search/SearchMedicine.dart';
+import '../Dashboard/Upload/UploadPrescription.dart';
 
 class BottomNavBar extends StatefulWidget {
    BottomNavBar({super.key, this.currentIndex = 0});
@@ -48,10 +49,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.account_circle,
+                Icons.camera_alt,
                 color: Colors.red,
               ),
-              label: 'Profile',
+              label: 'Upload',
             ),
             BottomNavigationBarItem(
               icon: Icon(
@@ -87,9 +88,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
       case 1:
         return SearchMedicine();
       case 2:
-        return Watchlist();
+        return UploadPrescription();
       case 3:
-        return UploadImage();
+        return Wishlist();
       case 4:
         return Profile();
     }

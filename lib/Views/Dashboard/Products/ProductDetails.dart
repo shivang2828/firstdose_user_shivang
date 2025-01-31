@@ -18,11 +18,20 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   final controller = Get.put(ProductDetailController());
   var h = Get.height;
+  late String productID;
 
   @override
+  // void initState() {
+  //   super.initState();
+  //   controller.productdetails();
+  // }
   void initState() {
     super.initState();
-    controller.productdetails();
+
+    final Map<String, dynamic> args = Get.arguments;
+    productID = args['productID'];
+
+    controller.productdetails(productID);
   }
 
   @override
@@ -63,7 +72,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         children: images.map((Url) {
                           return ClipRRect(
                               borderRadius: BorderRadius.circular(10),
-                              clipBehavior: Clip.antiAlias,
+                              clipBehavior: Clip.hardEdge,
                               child: Image.network(
                                 Url,
                                 fit: BoxFit.cover,
@@ -88,8 +97,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                       height: h * 0.5,
                       decoration: BoxDecoration(
                         color: ColorStyle.whitecolor,
-
-
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -97,12 +104,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                         children: [
                           Row(
                             children: [
-                              Text(
-                                '${product.name}',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                              Expanded(
+                                child: Text(
+                                  '${product.name}',
+                                  // maxLines: 2,
+                                  // overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                             ],
@@ -110,14 +121,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                           SizedBox(height: 8),
                           Row(
                             children: [
-                              Text(
-                                'by ${product.description}',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.grey,
-                                ),
-                              ),
+                              // Text(
+                              //   'by ${product.description}',
+                              //   style: TextStyle(
+                              //     fontSize: 15,
+                              //     fontWeight: FontWeight.w400,
+                              //     color: Colors.grey,
+                              //   ),
+                              // ),
                             ],
                           ),
                           SizedBox(height: 16),
@@ -140,20 +151,26 @@ class _ProductDetailsState extends State<ProductDetails> {
                               Text(
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 9,
-                                '${product.description} Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+                                '${product.description} ',
                                 style: GoogleFonts.poppins(
                                   fontSize: 18,
                                 ),
                               ),
-
                               Padding(
-                                padding: EdgeInsets.only(top: h*0.2),
+                                padding: EdgeInsets.only(top: h * 0.2),
                                 child: SizedBox(
                                   width: Get.width,
                                   height: 56,
                                   child: ElevatedButton(
+                                    // onPressed: () {
+                                    //   // Get.to(() => Cart());
+                                    // },
                                     onPressed: () {
-                                      Get.to(() => Cart());
+
+                                      Get.to(() => Cart(), arguments: {
+                                        // 'product': data[index],
+                                        'productID': product.id.toString(),
+                                      });
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: ColorStyle.themeColor,

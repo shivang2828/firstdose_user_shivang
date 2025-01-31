@@ -12,19 +12,22 @@ class ProductController extends GetxController {
 
   var productModel = ProductModel().obs;
 
-  product() async {
+  product(String productID) async {
     Uri url = Uri.parse('https://kbdevs.com/firstdose/api/users/v1/products');
     try {
       final response = await http.post(url, body: {
         "device_details": 'device_details',
         "app_version": 'app_version',
         'device_id': 'device_id',
+        'category_id' : productID,
+         "is_popular": "0",
         'api_version': 'api_version',
         'device_type': 'android',
         'debug_mode': 'debug_mode'
+
       }, headers: {});
 
-      // if (response.statusCode == 200) {
+      // if (response.statusCode == 200) {z
       //   setState(() {
       var data = json.decode(response.body);
       log(response.body);
@@ -41,7 +44,7 @@ class ProductController extends GetxController {
       } else {}
     } catch (e) {
       debugPrint('Error: $e');
-      Get.snackbar('Error', 'Failed to Send OTP. Please try again.');
+      Get.snackbar('Error', 'Failed to Load Data. Please try again.');
     }
   }
 }

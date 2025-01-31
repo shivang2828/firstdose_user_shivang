@@ -13,7 +13,7 @@ class ProductDetailController extends GetxController {
 
   var isLoading = true.obs;
 
-  productdetails() async {
+  void productdetails(String productID) async {
     Uri url =
         Uri.parse('https://kbdevs.com/firstdose/api/users/v1/product-detail');
 
@@ -24,7 +24,7 @@ class ProductDetailController extends GetxController {
         "app_version": "app_version",
         "device_type": "android",
         "device_id": "device_id",
-        "product_id": "1",
+        "product_id": productID,
       }, headers: {});
 
 

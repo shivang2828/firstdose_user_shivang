@@ -1,14 +1,16 @@
-
+import 'package:firstdose_user/Controller/CategoriesController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../Controller/ProductController.dart';
+import '../../../Controller/WishListController.dart';
 import '../../../Models/ProductModel.dart';
 import '../../../Styles/ColorStyle.dart';
 import '../../../Styles/CustomTextStyles.dart';
 import '../../../Utils/CustomAppBar.dart';
+import '../Profile/WishList.dart';
 import 'ProductDetails.dart';
 
 class Product extends StatefulWidget {
@@ -18,14 +20,18 @@ class Product extends StatefulWidget {
   State<Product> createState() => _ProductState();
 }
 
-
 class _ProductState extends State<Product> {
   final controller = Get.put(ProductController());
+  late String productID;
 
   @override
   void initState() {
     super.initState();
-    controller.product();
+    final Map<String, dynamic> args = Get.arguments;
+
+    productID = args['productID'];
+
+    controller.product(productID);
   }
 
   @override
@@ -37,7 +43,7 @@ class _ProductState extends State<Product> {
         isCartIcon: true,
       ),
       body: Obx(
-            () {
+        () {
           // Check if data is still loading
           if (controller.isLoading.value) {
             return Center(
@@ -70,7 +76,108 @@ class _ProductState extends State<Product> {
   }
 
   // List Container for displaying the products
+  // listContainer({required List<Products> data}) {
+  //   return ListView.builder(
+  //     padding: const EdgeInsets.all(8),
+  //     shrinkWrap: true,
+  //     scrollDirection: Axis.vertical,
+  //     physics: NeverScrollableScrollPhysics(),
+  //     itemCount: data.length,
+  //     itemBuilder: (context, index) {
+  //       return InkWell(
+  //         onTap: () {
+  //           Get.to(() => ProductDetails(), arguments: {
+  //             // 'product': data[index],
+  //             'productID': data[index].id.toString(),
+  //           });
+  //         },
+  //         child: Container(
+  //           alignment: Alignment.center,
+  //           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+  //           margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+  //           decoration: BoxDecoration(
+  //             color: Colors.white,
+  //             borderRadius: BorderRadius.circular(10),
+  //           ),
+  //           width: Get.width,
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.start,
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Image.network(
+  //                 data[index].images!,
+  //                 height: 65,
+  //                 width: 65,
+  //               ),
+  //               const SizedBox(width: 10),
+  //               Expanded(
+  //                 flex: 5,
+  //                 child: Column(
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: [
+  //                     Text(
+  //                       data[index].name!,
+  //                       style:
+  //                           CustomTextStyles.poppinsRegularBlack(fontSize: 14),
+  //                     ),
+  //                     const SizedBox(height: 5),
+  //                     Text(
+  //                       '₹ ${data[index].price}',
+  //                       style: GoogleFonts.poppins(
+  //                         fontSize: 14,
+  //                         fontWeight: FontWeight.w400,
+  //                         color: ColorStyle.blackcolor,
+  //                       ),
+  //                     ),
+  //                     const SizedBox(height: 6),
+  //                     InkWell(
+  //                       onTap: () {},
+  //                       child: Container(
+  //                         decoration: BoxDecoration(
+  //                           color: ColorStyle.themeColor,
+  //                           borderRadius: BorderRadius.circular(5),
+  //                         ),
+  //                         padding:
+  //                             EdgeInsets.symmetric(vertical: 6, horizontal: 15),
+  //                         child: Text(
+  //                           'Add to cart',
+  //                           style: CustomTextStyles.poppinsMediumWhite(
+  //                               fontSize: 10),
+  //                         ),
+  //                       ),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               Expanded(
+  //                 child: InkWell(
+  //                   onTap: () {
+  //                     Get.to(() => addToWishList, arguments: {
+  //                       // 'product': data[index],
+  //                       'productID': data[index].id.toString(),
+  //                     });
+  //                   },
+  //                   child: Container(
+  //                     padding: EdgeInsets.symmetric(vertical: 10),
+  //                     alignment: Alignment.topCenter,
+  //                     child: Icon(
+  //                       Icons.favorite,
+  //                       color: ColorStyle.themeColor,
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
   listContainer({required List<Products> data}) {
+    final wishListController = Get.put(WishListController());
+
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       shrinkWrap: true,
@@ -80,8 +187,9 @@ class _ProductState extends State<Product> {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            // Navigate to ProductDetails
-            Get.to(() => ProductDetails(), arguments: data[index]);
+            Get.to(() => ProductDetails(), arguments: {
+              'productID': data[index].id.toString(),
+            });
           },
           child: Container(
             alignment: Alignment.center,
@@ -123,25 +231,34 @@ class _ProductState extends State<Product> {
                       ),
                       const SizedBox(height: 6),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          // Add to cart logic
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             color: ColorStyle.themeColor,
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          padding: EdgeInsets.symmetric(vertical: 6, horizontal: 15),
+                          padding:
+                          EdgeInsets.symmetric(vertical: 6, horizontal: 15),
                           child: Text(
                             'Add to cart',
                             style: CustomTextStyles.poppinsMediumWhite(fontSize: 10),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
                 Expanded(
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () async {
+
+                      await wishListController.addToWishList(data[index].id.toString());
+                      Get.snackbar('Success', 'Product added to wishlist');
+
+                      Get.to(() => Wishlist());
+                    },
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       alignment: Alignment.topCenter,
@@ -160,4 +277,3 @@ class _ProductState extends State<Product> {
     );
   }
 }
-

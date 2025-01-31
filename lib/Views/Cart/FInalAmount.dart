@@ -1,5 +1,6 @@
 import 'package:firstdose_user/Controller/AddressController.dart';
 import 'package:firstdose_user/Utils/CustomAppBar.dart';
+import 'package:firstdose_user/Views/Cart/SeleCtPaymentMethod.dart';
 import 'package:firstdose_user/Views/Cart/ShippingInformation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -75,7 +76,6 @@ class _FinalAmountState extends State<FinalAmount> {
                     ),
                     InkWell(
                       onTap: () {
-                        
                         Get.to(() => ShippingInformation());
                       },
                       child: Text(
@@ -89,9 +89,8 @@ class _FinalAmountState extends State<FinalAmount> {
                 const SizedBox(
                   height: 20,
                 ),
-
                 Obx(
-                      () {
+                  () {
                     if (controller.isLoading.value) {
                       return Center(
                         child: SpinKitRotatingPlain(
@@ -109,59 +108,65 @@ class _FinalAmountState extends State<FinalAmount> {
                         itemBuilder: (context, index) {
                           var data = controller.model.value.data![index];
                           return Obx(
-                                () => Container(
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              margin: EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color: (controller.selectedAddress.value == index)
-                                      ? ColorStyle.themeColor
-                                      : ColorStyle.black2C2C2C,
-                                  width: 1,
+                            () => InkWell(
+                              onTap: () {
+                                setState(() {
+
+                                });
+                              },
+
+
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                margin: EdgeInsets.symmetric(vertical: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: (controller.selectedAddress.value ==
+                                            index)
+                                        ? ColorStyle.themeColor
+                                        : ColorStyle.black2C2C2C,
+                                    width: 1,
+                                  ),
                                 ),
-                              ),
-                              child: RadioListTile(
-                                contentPadding: EdgeInsets.zero,
-                                activeColor: ColorStyle.themeColor,
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      data.name!,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      '${data.fullAddress!} , ${data.city!} , ${data.state!} , ${data.pinCode!}',
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 15,
+                                child: RadioListTile(
+
+                                  contentPadding: EdgeInsets.zero,
+                                  activeColor: ColorStyle.themeColor,
+                                  title: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        data.name!,
                                       ),
-
-
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      '${data.phoneNumber.toString()}',
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                      )
-
-
-                                    ),
-                                  ],
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        '${data.fullAddress!} , ${data.city!} , ${data.state!} , ${data.pinCode!}',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text('${data.phoneNumber.toString()}',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 15,
+                                          )),
+                                    ],
+                                  ),
+                                  value: index,
+                                  groupValue: controller.model.value,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      controller.selectedAddress.value = index;
+                                    });
+                                    // controller.selectedAddress.value = index;
+                                  },
                                 ),
-                                value: index,
-                                groupValue: controller.model.value,
-                                onChanged: (value) {
-                                  setState(() {
-                                    controller.selectedAddress.value = index;
-                                  });
-                                  // controller.selectedAddress.value = index;
-                                },
                               ),
                             ),
                           );
@@ -170,18 +175,16 @@ class _FinalAmountState extends State<FinalAmount> {
                     }
                   },
                 ),
-
-
-
                 const SizedBox(
                   height: 20,
                 ),
-
-                SizedBox(
+                Container(
                   width: Get.width,
                   height: 56,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => SelectPaymentMethod());
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: ColorStyle.themeColor,
                       shape: RoundedRectangleBorder(
@@ -190,7 +193,7 @@ class _FinalAmountState extends State<FinalAmount> {
                       ),
                     ),
                     child: Text(
-                      "Continue",
+                      "Next",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -198,6 +201,9 @@ class _FinalAmountState extends State<FinalAmount> {
                       ),
                     ),
                   ),
+                ),
+                const SizedBox(
+                  height: 15,
                 ),
               ],
             ),

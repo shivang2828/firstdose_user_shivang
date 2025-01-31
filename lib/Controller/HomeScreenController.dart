@@ -3,9 +3,11 @@ import 'dart:developer';
 
 import 'package:firstdose_user/Models/DashBoardModel.dart';
 import 'package:firstdose_user/Models/SiteSeetingModel.dart';
+import 'package:firstdose_user/Utils/Const.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashBoardController extends GetxController {
 
@@ -41,6 +43,8 @@ class DashBoardController extends GetxController {
 
   dashboard() async {
     Uri url = Uri.parse('https://kbdevs.com/firstdose/api/users/v1/dashboard');
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    var ApiToken=sharedPref.getString(apiToken);
     try {
       final response = await http.post(url, body: {
         "device_details": 'device_details',
@@ -55,6 +59,7 @@ class DashBoardController extends GetxController {
       //   setState(() {
       var data = json.decode(response.body);
       log(response.body);
+      // debugPrint(ApiToken);
       var status = data['status'];
       var message = data['message'];
 
