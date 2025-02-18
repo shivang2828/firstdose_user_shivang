@@ -45,6 +45,7 @@ dependencies:
   flutter_svg: ^2.0.17
   sign_in_button: ^3.2.0
   intl: ^0.20.2
+  cached_network_image: ^3.4.1
 
 
   html: ^0.15.5

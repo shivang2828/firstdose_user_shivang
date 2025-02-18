@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firstdose_user/Styles/ImageStyle.dart';
 import 'package:firstdose_user/Utils/CustomAppBar.dart';
+import 'package:firstdose_user/Views/Dashboard/Upload/PlaceOrderPrescription.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,130 +27,116 @@ class _UploadPrescriptionState extends State<UploadPrescription> {
         isLeading: false,
         isCartIcon: false,
       ),
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
-
-
-              Expanded(
-                child: Container(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          child: Center(
-                            child: Image.asset(
-                              'assets/images/uploadPrescriptionIcon.png',
-                              height: Get.height * 0.3,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: selectImage,
-                              child: Image.asset(
-                                ImageStyle.gallery,
-                                height: 56,
-                                width: 56,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            InkWell(
-                              onTap: selectFileFromCamera,
-                              child: Image.asset(
-                                ImageStyle.camera,
-                                height: 56,
-                                width: 56,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        _buildGrid(imageFiles: imageFiles),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 2),
-                          child: TextFormField(
-                            maxLines: 5,
-                            decoration: InputDecoration(
-                              // contentPadding: EdgeInsets.symmetric(vertical: 40.0),
-                              hintText: 'Your Message',
-                              hintStyle: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: ColorStyle.themeColor,
-                              ),
-                              fillColor: Colors.white,
-                              filled: true,
-                              contentPadding: EdgeInsets.all(16),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
-                                    color: ColorStyle.blackcolor, width: 0.5),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(
-                                    color: ColorStyle.blackcolor, width: 0.5),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          width: Get.width,
-                          height: 56,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: ColorStyle.themeColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: Text(
-                              "Next",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white, // Text color
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+              Container(
+                height: Get.height * 0.36,
+                width: Get.width * 0.70,
+                child: Image.asset(
+                  ImageStyle.uploadPrescriptionIcon,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: selectImage,
+                    child: Image.asset(
+                      ImageStyle.gallery,
+                      height: 80,
+                      width: 80,
+                    ),
+                  ),
+                  // const SizedBox(
+                  //   width: 10,
+                  // ),
+                  InkWell(
+                    onTap: selectFileFromCamera,
+                    child: Image.asset(
+                      ImageStyle.camera,
+                      height: 80,
+                      width: 80,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              _buildGrid(imageFiles: imageFiles),
+              const SizedBox(
+                height: 15,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 2),
+                child: TextFormField(
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    // contentPadding: EdgeInsets.symmetric(vertical: 40.0),
+                    hintText: 'Your Message',
+                    hintStyle: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: ColorStyle.themeColor,
+                    ),
+                    fillColor: Colors.white,
+                    filled: true,
+                    contentPadding: EdgeInsets.all(16),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide:
+                          BorderSide(color: ColorStyle.blackcolor, width: 0.5),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide:
+                          BorderSide(color: ColorStyle.blackcolor, width: 0.5),
                     ),
                   ),
                 ),
               ),
-
-
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                // padding: EdgeInsets.symmetric(horizontal: 10),
+                width: Get.width,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.to(() => PlaceOrderPrescription());
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorStyle.themeColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    "Next",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // Text color
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: Get.height * 0.03,
+              )
             ],
           ),
         ),
@@ -197,37 +184,52 @@ class _UploadPrescriptionState extends State<UploadPrescription> {
   }
 
   _buildGrid({required List<File> imageFiles}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GridView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
+    return GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: imageFiles.length,
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisSpacing: 16,
             mainAxisSpacing: 20,
-          ),
-          itemBuilder: (context, index) => InkWell(
-            onTap: () {
-              setState(() {
-                // imageFiles.removeAt(index);
-              });
-            },
-            child: Column(
+            childAspectRatio: 1,
+            // mainAxisExtent: 100,
+            crossAxisCount: 3),
+        itemBuilder: (context, index) => Stack(
+              clipBehavior: Clip.none,
               children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                Container(
+                  height: 100,
+                  width: Get.width * 0.30,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: FittedBox(
+                    fit: BoxFit.fill,
                     child: Image.file(
+                      fit: BoxFit.fill,
                       imageFiles[index],
-                      height: 100,
+                    ),
+                  ),
+                ),
+                Positioned(
+                    top: -10,
+                    right: -10,
+                    child: InkWell(
+                      onTap: () => setState(() {
+                        imageFiles.removeAt(index);
+                      }),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ColorStyle.themeColor),
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.white,
+                        ),
+                      ),
                     )),
               ],
-            ),
-          ),
-          itemCount: imageFiles.length,
-          shrinkWrap: true,
-        )
-      ],
-    );
+            ));
   }
 }

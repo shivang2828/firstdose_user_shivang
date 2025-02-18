@@ -155,17 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Middle Text widget function
-  // Widget _buildMiddleText() {
-  //   return Text(
-  //     "Login to your account",
-  //     style: GoogleFonts.poppins(
-  //       fontSize: 22,
-  //       fontWeight: FontWeight.w500,
-  //       color: ColorStyle.blackcolor,
-  //     ),
-  //   );
-  // }
+
   Widget _buildMiddleText() {
     return Stack(
       children: [

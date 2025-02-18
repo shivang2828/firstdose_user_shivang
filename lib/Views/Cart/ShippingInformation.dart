@@ -1,10 +1,10 @@
-import 'package:firstdose_user/Views/Cart/FInalAmount.dart';
+import 'package:firstdose_user/Views/Cart/FinalAmount.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firstdose_user/Styles/ColorStyle.dart';
 import 'package:firstdose_user/Utils/CustomAppBar.dart';
-import 'package:firstdose_user/Views/Cart/SelectPaymentMethod.dart';
+import 'package:firstdose_user/Views/Cart/OrderReview.dart';
 import '../../Controller/AddressController.dart';
 
 class ShippingInformation extends StatefulWidget {

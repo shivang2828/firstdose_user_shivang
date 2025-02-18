@@ -250,8 +250,8 @@ class Address {
 class User {
   int? id;
   String? userType;
-  Null? name;
-  Null? email;
+  String? name;
+  String? email;
   int? phoneNumber;
   Null? image;
   Null? permissions;

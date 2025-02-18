@@ -64,7 +64,8 @@ class _OrderDetailsState extends State<OrderDetails> {
             children: [
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+                  margin: EdgeInsets.only(top: 20),
                   width: Get.width,
                   decoration: BoxDecoration(
                     color: ColorStyle.themeColor.withOpacity(0.78),
@@ -190,6 +191,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           null)
                                       ? Expanded(
                                           child: Text(
+                                            textAlign: TextAlign.center,
                                             'Order is not accepted yet,Someone will accept it shortly',
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.bold,
@@ -198,6 +200,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           ),
                                         )
                                       : Text(
+                                          textAlign: TextAlign.center,
                                           '₹${controller.orderDetailModel.value.data!.merchantDetail}',
                                           style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.bold,
@@ -267,21 +270,22 @@ class _OrderDetailsState extends State<OrderDetails> {
                     ),
                   ],
                 ),
-                (controller.orderDetailModel.value.data!
-                    .paymentStatus == 'pending')?
-                Text(
-                  'Payment Pending',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: ColorStyle.yellowFFC22E,
-                  ),
-                ):Text(
-                  'Payment Approved',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: ColorStyle.green20AF0B,
-                  ),
-                ),
+                (controller.orderDetailModel.value.data!.paymentStatus ==
+                        'pending')
+                    ? Text(
+                        'Payment Pending',
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: ColorStyle.yellowFFC22E,
+                        ),
+                      )
+                    : Text(
+                        'Payment Approved',
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: ColorStyle.green20AF0B,
+                        ),
+                      ),
               ],
             ),
             const SizedBox(height: 10),
@@ -295,21 +299,22 @@ class _OrderDetailsState extends State<OrderDetails> {
                     color: ColorStyle.black2C2C2C,
                   ),
                 ),
-                (controller.orderDetailModel.value.data!
-                    .orderStatus == 'pending')?
-                Text(
-                  'Order  Pending',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: ColorStyle.yellowFFC22E,
-                  ),
-                ):Text(
-                  'Order Accepted',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: ColorStyle.green20AF0B,
-                  ),
-                ),
+                (controller.orderDetailModel.value.data!.orderStatus ==
+                        'pending')
+                    ? Text(
+                        'Order  Pending',
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: ColorStyle.yellowFFC22E,
+                        ),
+                      )
+                    : Text(
+                        'Order Accepted',
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: ColorStyle.green20AF0B,
+                        ),
+                      ),
                 // Text(
                 //   'Order Pending',
                 //   style: GoogleFonts.poppins(
@@ -342,7 +347,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                               ),
                             ),
                           ),
-                          Text('₹${orderItem[itemIndex].product!.price}')
+                          Text('₹${orderItem[itemIndex].product!.price}',
+                          style: GoogleFonts.poppins(
+                            color: ColorStyle.themeColor,
+                            fontWeight: FontWeight.w500
+                          ),
+
+                          )
                         ]),
                     Divider(
                       color: ColorStyle.greycolor,

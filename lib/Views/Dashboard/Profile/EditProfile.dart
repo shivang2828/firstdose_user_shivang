@@ -19,14 +19,11 @@ class _EditProfileState extends State<EditProfile> {
     var h = Get.height;
     var w = Get.width;
     return Scaffold(
-
-       appBar: CustomAppBar(
-         isLeading: true,
-         isCartIcon: false,
-         appbarTitle: 'Edit Profile',
-       ),
-
-
+      appBar: CustomAppBar(
+        isLeading: true,
+        isCartIcon: false,
+        appbarTitle: 'Edit Profile',
+      ),
 
       // appBar: AppBar(
       //   // centerTitle: true,
@@ -64,27 +61,6 @@ class _EditProfileState extends State<EditProfile> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // const SizedBox(height: 10),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.start,
-                //   children: [
-                //
-                //      Image.asset(
-                //       ImageStyle.backwardArrow,
-                //       height: 20,
-                //       width: 20,
-                //       color: ColorStyle.greycolor,
-                //                          ),
-                //
-                //     Text(
-                //       "Edit Profile",
-                //       style: GoogleFonts.poppins(
-                //         fontSize: 20,
-                //         fontWeight: FontWeight.bold,
-                //       ),
-                //     ),
-                //   ],
-                // ),
                 const SizedBox(
                   height: 40,
                 ),
@@ -105,11 +81,9 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 customContainer(
                     name: 'Email', imageName: ImageStyle.emailPrefix),
-
                 SizedBox(
                   height: h * 0.3,
                 ),
-
                 Container(
                   width: Get.width,
                   height: 50,
@@ -143,41 +117,6 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 }
-
-// Widget customContainer({required String name, required String imageName}) {
-//   return Container(
-//     margin: EdgeInsets.only(top: 2),
-//     width: double.infinity,
-//     height: 34,
-//     child: Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//       children: [
-//         Row(
-//           children: [
-//             Image.asset(
-//               imageName,
-//               height: 40,
-//               width: 40,
-//               color: ColorStyle.themeColor,
-//             ),
-//             const SizedBox(
-//               width: 10,
-//             ),
-//             Text(
-//               name,
-//               style: CustomTextStyles.poppinsRegularCustom(
-//                   fontSize: 18, color: ColorStyle.themeColor),
-//             ),
-//           ],
-//         ),
-//         // Icon(
-//         //   Icons.arrow_forward_ios,
-//         //   color: ColorStyle.themeColor,
-//         // ),
-//       ],
-//     ),
-//   );
-// }
 
 Widget customContainer({
   required String name,

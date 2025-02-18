@@ -59,13 +59,13 @@ class Data {
   String? orderStatus;
   Null? masterId;
   String? paymentStatus;
-  Null? orderDescription;
-  Null? prescriptionId;
+  String? orderDescription;
+  int? prescriptionId;
   Null? bill;
   Null? deletedAt;
   String? createdAt;
   String? updatedAt;
-  Null? prescription;
+  Prescription? prescription;
   List<OrderItem>? orderItem;
 
   Data(
@@ -117,7 +117,9 @@ class Data {
     deletedAt = json['deleted_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    prescription = json['prescription'];
+    prescription = json['prescription'] != null
+        ? new Prescription.fromJson(json['prescription'])
+        : null;
     if (json['order_item'] != null) {
       orderItem = <OrderItem>[];
       json['order_item'].forEach((v) {
@@ -150,10 +152,53 @@ class Data {
     data['deleted_at'] = this.deletedAt;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['prescription'] = this.prescription;
+    if (this.prescription != null) {
+      data['prescription'] = this.prescription!.toJson();
+    }
     if (this.orderItem != null) {
       data['order_item'] = this.orderItem!.map((v) => v.toJson()).toList();
     }
+    return data;
+  }
+}
+
+class Prescription {
+  int? id;
+  int? userId;
+  String? message;
+  List<String>? files;
+  Null? deletedAt;
+  String? createdAt;
+  String? updatedAt;
+
+  Prescription(
+      {this.id,
+        this.userId,
+        this.message,
+        this.files,
+        this.deletedAt,
+        this.createdAt,
+        this.updatedAt});
+
+  Prescription.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['user_id'];
+    message = json['message'];
+    files = json['files'].cast<String>();
+    deletedAt = json['deleted_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['user_id'] = this.userId;
+    data['message'] = this.message;
+    data['files'] = this.files;
+    data['deleted_at'] = this.deletedAt;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

@@ -115,6 +115,14 @@ class _ProfileState extends State<Profile> {
               ),
               const SizedBox(height: 20),
               InkWell(
+                  onTap: () {
+                    Get.to(() => Wishlist());
+                  },
+                  child: customContainer(
+                      imageName: ImageStyle.wishlist, name: 'Wishlist')
+              ),
+              const SizedBox(height: 30),
+              InkWell(
                 onTap: () {
                   Get.to(() => WebView(
                         url:
@@ -152,13 +160,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               const SizedBox(height: 30),
-              InkWell(
-                  onTap: () {
-                    Get.to(() => Wishlist());
-                  },
-                  child: customContainer(
-                      imageName: ImageStyle.wishlist, name: 'Wishlist')),
-              const SizedBox(height: 30),
+
               InkWell(
                   onTap: () {
                     Get.to(() => SafeArea(

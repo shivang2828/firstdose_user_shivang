@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart'; // Importing the SpinKit package
 
 import '../../../Styles/ColorStyle.dart';
+import '../../../Styles/CustomTextStyles.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({super.key});
@@ -19,6 +20,7 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
   final controller = Get.put(ProductDetailController());
+  // final MyCartController myCartController = Get.put(MyCartController());
   var h = Get.height;
   late String productID;
 
@@ -53,7 +55,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           return Center(
             child: CircularProgressIndicator(
               color: ColorStyle.themeColor,
-
             ),
           );
         } else {
@@ -63,7 +64,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
           var product = controller.productdetailModel.value.data!.products![0];
           var images = product.images ?? [];
-          final addCartController = Get.put(MyCartController());
+          // final addCartController = Get.put(MyCartController());
 
           return Padding(
             padding: EdgeInsets.all(8),
@@ -130,44 +131,244 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ),
                             SizedBox(height: 20),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      '₹${product.price}',
+                                      style: TextStyle(
+                                          decoration: (product.originalPrice! !=
+                                                  product.discountedPrice!)
+                                              ? TextDecoration.lineThrough
+                                              : TextDecoration.none,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: ColorStyle.themeColor),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    (product.originalPrice! !=
+                                            product.discountedPrice)
+                                        ? Text(
+                                            '₹${product.discountedPrice}',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: ColorStyle.themeColor),
+                                          )
+                                        : SizedBox.shrink(),
+                                  ],
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  height: 30,
+                                  width: 100,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () async {
+                                          if (controller.count.value == 0) {
+                                            Get.snackbar(
+                                                "", "Value Cant be less than 0",
+                                                colorText:
+                                                    ColorStyle.black2C2C2C,
+                                                backgroundColor:
+                                                    ColorStyle.themeColor,
+                                                margin: EdgeInsets.all(8));
+                                          } else {
+                                            controller.count.value--;
+                                            // await addCartController.updateCart(
+                                            //     flag: 'minus',
+                                            //     productId:
+                                            //         product.id.toString(),
+                                            //     quantity: controller.count.value
+                                            //         .toString());
+                                          }
+                                          // controller.count.value--;
+                                        },
+                                        child: Container(
+                                          height: 25,
+                                          width: 25,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              border: Border.all(
+                                                  color:
+                                                      ColorStyle.themeColor)),
+                                          child: Icon(
+                                            Icons.remove,
+                                            color: ColorStyle.themeColor,
+                                          ),
+                                        ),
+                                      ),
+                                      Obx(
+                                        () => Text(
+                                          controller.count.value.toString(),
+                                          style: CustomTextStyles
+                                              .poppinsMediumBlack(fontSize: 16),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          if (controller.count.value > 9) {
+                                            Get.snackbar("",
+                                                "You can add maximum only 10 item at a time",
+                                                colorText:
+                                                    ColorStyle.black2C2C2C,
+                                                backgroundColor:
+                                                    ColorStyle.themeColor,
+                                                margin: EdgeInsets.all(8));
+                                          } else {
+                                            controller.count.value++;
+                                          }
+                                        },
+                                        child: Container(
+                                          height: 25,
+                                          width: 25,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              border: Border.all(
+                                                  color:
+                                                      ColorStyle.themeColor)),
+                                          child: Icon(
+                                            Icons.add,
+                                            color: ColorStyle.themeColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Row(
                               children: [
                                 Text(
-                                  '₹${product.price}',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: ColorStyle.themeColor),
+                                  'Category Name :- ',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500),
                                 ),
+                                Text(
+                                  '${product.category!.name}',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      color: ColorStyle.grey7E8494),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Salt Composition :- ',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  product.saltComposition == null
+                                      ? ' '
+                                      : '${product.saltComposition}',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      color: ColorStyle.grey7E8494),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Drug Interactions:- ',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  product.drugInteractions == null
+                                      ? ' '
+                                      : '${product.drugInteractions}',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      color: ColorStyle.grey7E8494),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Side effects:- ',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  product.sideEffects == null
+                                      ? ' '
+                                      : '${product.sideEffects}',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      color: ColorStyle.grey7E8494),
+                                )
                               ],
                             ),
                             const SizedBox(
                               height: 16,
                             ),
                             Text(
+                              product.description == null
+                                  ? ''
+                                  : stripHtml('${product.description}'),
+                              style: GoogleFonts.poppins(
+                                fontSize: 15,
+                              ),
                               // overflow: TextOverflow.ellipsis,
                               // maxLines: 9,
-                              stripHtml('${product.description}'),
-                              // '${product.description} ',
-                              style: GoogleFonts.poppins(
-                                fontSize: 18,
-                              ),
                             ),
                           ],
                         ),
                       ),
                     ),
                   ),
+
                   Container(
                     width: Get.width,
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () async {
-                        await addCartController
-                            .addToMyCart(product.id.toString());
-                        Get.snackbar('Success', 'Product added to cart');
+                        if (product.cartQuantity != 0) {
+                          if (controller.count.value > 1) {
+                            // await addCartController.updateCart(
+                            //     flag: 'plus',
+                            //     productId: product.id.toString(),
+                            //     quantity: controller.count.value.toString());
+                          } else {
+                            await controller.addToCart(product.id.toString(),
+                                controller.count.value.toString());
+                          }
+                        } else {
+                          await controller.addToCart(product.id.toString(),
+                              controller.count.value.toString());
+                        }
+
+                        // Get.snackbar('Success', 'Product added to cart');
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorStyle.themeColor,
+                        backgroundColor: controller.count.value == 0
+                            ? ColorStyle.greyD9D9D9
+                            : ColorStyle.themeColor,
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(12), // Button border radius

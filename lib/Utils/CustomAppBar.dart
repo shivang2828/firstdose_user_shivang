@@ -34,7 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           (isCartIcon)
               ? InkWell(
                onTap: (){
-                 Get.to(()  => Cart());
+                 Get.to(() => Cart());
                },
                 child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 14),
@@ -66,7 +66,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: Text(
           appbarTitle,
           style: CustomTextStyles.poppinsSemiBoldBlack(fontSize: 21),
-        ));
+        )
+    );
   }
 }
 
