@@ -10,7 +10,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashBoardController extends GetxController {
-
   var isLoading = true.obs;
 
   var dashboardModel = DashBoardModel().obs;
@@ -44,7 +43,8 @@ class DashBoardController extends GetxController {
   dashboard() async {
     Uri url = Uri.parse('https://kbdevs.com/firstdose/api/users/v1/dashboard');
     SharedPreferences sharedPref = await SharedPreferences.getInstance();
-    var ApiToken=sharedPref.getString(apiToken);
+    var ApiToken = sharedPref.getString(apiToken);
+    var _isLogin = sharedPref.getBool(isLogin);
     try {
       final response = await http.post(url, body: {
         "device_details": 'device_details',
@@ -64,17 +64,20 @@ class DashBoardController extends GetxController {
       var message = data['message'];
 
       if (status == 1) {
+        // debugPrint("Api is working right");
 
-         isLoading(false);
+        isLoading(false);
+        debugPrint(ApiToken);
         dashboardModel.value = DashBoardModel.fromJson(data);
 
-        debugPrint(dashboardModel.value.data!.categories![0].name);
-      } else if (status == 0) {
-      } else {}
+        // debugPrint(dashboardModel.value.data!.categories![0].name);
+      }
     } catch (e) {
       debugPrint('Error: $e');
-      Get.snackbar('Error', 'Failed to Send OTP. Please try again.');
+      Get.snackbar('Error', 'Failed to Load Data');
     }
     // });
   }
 }
+
+

@@ -11,6 +11,7 @@ import '../Views/NavigationBar/NavigationBar.dart';
 class OtpController extends GetxController {
   var otpController = TextEditingController().obs;
 
+
   // Modify otpLogin to accept phoneNumber as a parameter
   otpLogin(String phoneNumber) async {
     Uri url =
@@ -59,6 +60,7 @@ Map<String ,dynamic> body = {
 
 
         debugPrint('api token is $token');
+        // isLogin(true);
 
 
 

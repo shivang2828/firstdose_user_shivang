@@ -1,3 +1,4 @@
+import 'package:firstdose_user/Controller/LogOutController.dart';
 import 'package:firstdose_user/Controller/WebView.dart';
 import 'package:firstdose_user/Styles/ImageStyle.dart';
 import 'package:firstdose_user/Utils/CustomAppBar.dart';
@@ -10,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Styles/ColorStyle.dart';
 import '../../../Styles/CustomTextStyles.dart';
+import '../../../Utils/Const.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -19,11 +21,29 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  bool isLoggedIn = false;
+  final controller = Get.put(LogOutController());
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    checkLoginStatus();
   }
+
+  Future<void> checkLoginStatus() async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    bool loginStatus = sharedPref.getBool(isLogin) ?? false;
+
+    setState(() {
+      isLoggedIn = loginStatus;
+    });
+  }
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +54,13 @@ class _ProfileState extends State<Profile> {
         isLeading: false,
       ),
       body: Padding(
-
         padding: EdgeInsets.all(16),
         child: SingleChildScrollView(
-
           child: SafeArea(
-
               child: Column(
-
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
               const SizedBox(height: 10),
               Container(
                 // alignment: Alignment.centerLeft,
@@ -104,6 +119,7 @@ class _ProfileState extends State<Profile> {
                   Get.to(() => WebView(
                         url:
                             'https://kbdevs.com/firstdose/terms-and-conditions',
+                        name: 'Terms and Conditions',
                       ));
                 },
                 child: customContainer(
@@ -115,6 +131,7 @@ class _ProfileState extends State<Profile> {
                 onTap: () {
                   Get.to(() => WebView(
                         url: 'https://kbdevs.com/firstdose/privacy-policy',
+                        name: 'Privacy Policy',
                       ));
                 },
                 child: customContainer(
@@ -124,8 +141,10 @@ class _ProfileState extends State<Profile> {
               const SizedBox(height: 30),
               InkWell(
                 onTap: () {
-                  Get.to(() =>
-                      WebView(url: 'https://kbdevs.com/firstdose/contact-us'));
+                  Get.to(() => WebView(
+                        url: 'https://kbdevs.com/firstdose/contact-us',
+                        name: 'Contact Us',
+                      ));
                 },
                 child: customContainer(
                   imageName: ImageStyle.contactUs,
@@ -134,57 +153,127 @@ class _ProfileState extends State<Profile> {
               ),
               const SizedBox(height: 30),
               InkWell(
-                  onTap: (){
+                  onTap: () {
                     Get.to(() => Wishlist());
                   },
-
-                  child: customContainer(imageName: ImageStyle.wishlist, name: 'Wishlist')),
+                  child: customContainer(
+                      imageName: ImageStyle.wishlist, name: 'Wishlist')),
               const SizedBox(height: 30),
               InkWell(
                   onTap: () {
-                    
                     Get.to(() => SafeArea(
-
-                      child: WebView(
+                          child: WebView(
                             url: 'https://kbdevs.com/firstdose/faq',
+                            name: 'FAQ',
                           ),
-                    ));
+                        ));
                   },
                   child:
                       customContainer(imageName: ImageStyle.faq, name: 'FAQ')),
               const SizedBox(height: 30),
-              InkWell(
-                  onTap: () => showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('FirstDose',
+              if (isLoggedIn) ...[
+                InkWell(
+                    onTap: () => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text('FirstDose',
+                                style: GoogleFonts.poppins(
+                                  color: ColorStyle.black2C2C2C,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            content: Text('Are you Sure, want to logout?',
+                                style: GoogleFonts.poppins(
+                                  color: ColorStyle.black2C2C2C,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                )),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                child: Text('Cancel',
+                                    style: GoogleFonts.poppins(
+                                      color: ColorStyle.themeColor,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  // SharedPreferences sharedPref =
+                                  //     await SharedPreferences.getInstance();
+                                  //
+                                  // await sharedPref.clear();
+                                  controller.userLogout();
+
+
+                                },
+                                child: Text('OK',
+                                    style: GoogleFonts.poppins(
+                                      color: ColorStyle.themeColor,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                              )
+                            ],
                           ),
-                          content: const Text('Are you Sure, want to logout'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'Cancel'),
-                              child: const Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () async {
-                                SharedPreferences sharedPref =
-                                    await SharedPreferences.getInstance();
-
-                                await sharedPref.clear();
-
-                                // Perform the navigation
-                                Get.offAll(() => LoginScreen());
-                              },
-                              child: const Text('OK'),
-                            )
-                          ],
                         ),
-                      ),
+                    child: customContainer(
+                        imageName: ImageStyle.logout, name: 'LogOut')),
+                const SizedBox(height: 30),
+                InkWell(
+                  onTap: () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: Text('FirstDose',
+                          style: GoogleFonts.poppins(
+                            color: ColorStyle.black2C2C2C,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      content:
+                          Text('Are you Sure, want to Delete Your Account?',
+                              style: GoogleFonts.poppins(
+                                color: ColorStyle.black2C2C2C,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              )),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'Cancel'),
+                          child: Text('Cancel',
+                              style: GoogleFonts.poppins(
+                                color: ColorStyle.themeColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              )),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            SharedPreferences sharedPref =
+                                await SharedPreferences.getInstance();
+
+                            await sharedPref.clear();
+
+                            // Perform the navigation
+                            Get.offAll(() => LoginScreen());
+                          },
+                          child: Text('OK',
+                              style: GoogleFonts.poppins(
+                                color: ColorStyle.themeColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              )),
+                        )
+                      ],
+                    ),
+                  ),
                   child: customContainer(
-                      imageName: ImageStyle.logout, name: 'LogOut')),
-              const SizedBox(height: 30),
-              customContainer(name: 'Delete Account', imageName: ImageStyle.deleteAccount),
-              const SizedBox(height: 30),
+                      name: 'Delete Account',
+                      imageName: ImageStyle.deleteAccount),
+                ),
+              ]
             ],
           )),
         ),
@@ -193,7 +282,7 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-Widget customContainer({required String name, required String imageName}) {
+customContainer({required String name, required String imageName}) {
   return Container(
     margin: EdgeInsets.only(top: 2),
     width: double.infinity,

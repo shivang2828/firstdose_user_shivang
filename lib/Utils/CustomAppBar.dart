@@ -14,6 +14,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         this.onTap,
         this.isCartIcon = true});
 
+
+
   final appbarTitle;
   bool isLeading = false;
   bool isCartIcon = true;
@@ -39,7 +41,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: IconButton(
                     onPressed: onTap,
                     icon: Icon(
-                      Icons.add_shopping_cart
+                        Icons.shopping_cart,
+                        color: ColorStyle.blackcolor,
 
 
                     ),
@@ -66,3 +69,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ));
   }
 }
+
+
+
+

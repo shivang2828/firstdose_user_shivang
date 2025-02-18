@@ -1,12 +1,13 @@
-
 import 'package:firstdose_user/Controller/ProductDetailController.dart';
 import 'package:firstdose_user/Utils/CustomAppBar.dart';
 import 'package:firstdose_user/Views/Dashboard/Products/ProductDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import '../../../Controller/SearchController.dart';
 import '../../../Styles/ColorStyle.dart';
+import '../../../Styles/CustomTextStyles.dart';
 
 class SearchMedicine extends StatefulWidget {
   const SearchMedicine({super.key});
@@ -16,14 +17,7 @@ class SearchMedicine extends StatefulWidget {
 }
 
 class _SearchMedicineState extends State<SearchMedicine> {
-  final SearchMedicineController controller = Get.put(SearchMedicineController());
-
-
-  @override
-  void initState() {
-    super.initState();
-    controller.textController;
-  }
+  final controller = Get.put(SearchMedicineController());
 
   @override
   Widget build(BuildContext context) {
@@ -47,78 +41,104 @@ class _SearchMedicineState extends State<SearchMedicine> {
                   color: Colors.grey,
                   height: 1.5,
                 ),
-                onChanged: (text) => controller.searchMedicine(text),
+                onChanged: (text) async {
+                  if (text.isNotEmpty) {
+                    await controller.searchMedicine(text);
+                  } else {
+                    controller.hasSearched.value = false;
+                    controller.model.value.data?.clear();
+
+                  }
+                },
+                controller: TextEditingController(),
               ),
               const SizedBox(height: 20),
               Expanded(
                 child: Obx(() {
                   if (controller.isLoading.value) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (controller.model.value.data == null || controller.model.value.data!.isEmpty) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: ColorStyle.themeColor,
+                        strokeCap: StrokeCap.butt,
+                      ),
+                    );
+                  }
+                  if (!controller.hasSearched.value) {
+                    return Center(
+                      // child: Text(
+                      //   "Start Searching",
+                      //   style:
+                      //       CustomTextStyles.poppinsRegularBlack(fontSize: 16),
+                      // ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Lottie.asset('assets/lottie/noMedicineFound.json'),
+                            Text(
+                              'Start Searching',
+                              style: CustomTextStyles.poppinsRegularBlack(
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  if (controller.model.value.data?.isEmpty ?? true) {
                     return Center(
                       child: Text(
                         "No results found",
                         style: GoogleFonts.poppins(color: Colors.grey),
                       ),
                     );
-                  } else {
-                    return ListView.builder(
-                      itemCount: controller.model.value.data!.length,
-                      itemBuilder: (context, index) {
-                        final medicine = controller.model.value.data![index];
-                        return InkWell(
-                          onTap: () {
-
-                            Get.to(() => ProductDetails(), arguments: {
-                              // 'product': data[index],
-                              'productID': medicine.id.toString(),
-                            });
-                          },
-
-
-                          child: Card(
-
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            elevation: 5,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-
-                                children: [
-                                  medicine.images != null
-                                      ? Image.network(
-                                    medicine.images!,
-                                    width: 80,
-                                    height: 80,
-                                    fit: BoxFit.cover,
+                  }
+                  return ListView.builder(
+                    itemCount: controller.model.value.data!.length,
+                    itemBuilder: (context, index) {
+                      final medicine = controller.model.value.data![index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 12.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: ListTile(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 16.0),
+                            leading: medicine.images != null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Image.network(
+                                      medicine.images!,
+                                      width: 50,
+                                      height: 50,
+                                      fit: BoxFit.cover,
+                                    ),
                                   )
-                                      : Icon(
+                                : const Icon(
                                     Icons.medical_services,
                                     size: 50,
                                     color: Colors.grey,
                                   ),
-                                  const SizedBox(width: 5),
-                                  Expanded(
-                                    child: ListTile(
-                                      title: Text(
-                                        medicine.name ?? 'Unknown',
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                            title: Text(
+                              medicine.name ?? 'Unknown',
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
+                            onTap: () {
+                              Get.to(() => ProductDetails(), arguments: {
+                                'productID': medicine.id.toString(),
+                              });
+                            },
                           ),
-                        );
-                      },
-                    );
-                  }
+                        ),
+                      );
+                    },
+                  );
                 }),
               ),
             ],
@@ -134,6 +154,7 @@ class CustomSearchBar extends StatelessWidget {
   final String hintText;
   final TextStyle hintStyle;
   final ValueChanged<String> onChanged;
+  final TextEditingController controller;
 
   const CustomSearchBar({
     super.key,
@@ -141,6 +162,8 @@ class CustomSearchBar extends StatelessWidget {
     required this.hintText,
     required this.hintStyle,
     required this.onChanged,
+
+    required this.controller,
   });
 
   @override
@@ -148,6 +171,13 @@ class CustomSearchBar extends StatelessWidget {
     return TextField(
       onChanged: onChanged,
       decoration: InputDecoration(
+        suffixIcon: IconButton(
+          onPressed: (){
+            controller.clear;
+            onChanged('');
+          },
+          icon: Icon(Icons.clear),
+        ),
         prefixIcon: leading,
         hintText: hintText,
         hintStyle: hintStyle,
@@ -161,7 +191,8 @@ class CustomSearchBar extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(color: ColorStyle.blackcolor, width: 0.5),
         ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       ),
     );
   }

@@ -1,9 +1,11 @@
 import 'dart:convert';
 
-import 'package:firstdose_user/Views/Auth/otpScreen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import '../Views/Auth/otpScreen.dart';
 
 class LoginController extends GetxController {
   // Define the TextEditingController for the phone input
@@ -25,8 +27,7 @@ class LoginController extends GetxController {
         'debug_mode': 'debug_mode'
       }, headers: {});
 
-      // if (response.statusCode == 200) {
-      //   setState(() {
+
       var data = json.decode(response.body);
       debugPrint(response.body);
       var status = data['status'];
@@ -35,7 +36,7 @@ class LoginController extends GetxController {
       if (status == 1) {
         debugPrint('OTP Send Successfully');
 
-        // Get.offAll()
+
 
         Get.to(() => Otpscreen(phoneNumber: phoneController.value.text));
       } else if (status == 0) {
@@ -49,8 +50,8 @@ class LoginController extends GetxController {
       debugPrint('Error: $e');
       Get.snackbar('Error', 'Failed to Send OTP. Please try again.');
     }
-    // });
+
   }
 
-// Optionally, you can add other logic for managing the phone number
+
 }

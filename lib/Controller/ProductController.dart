@@ -6,31 +6,39 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Utils/Const.dart';
 
 class ProductController extends GetxController {
   var isLoading = true.obs;
 
   var productModel = ProductModel().obs;
 
-  product(String productID) async {
+  product(String categoryID) async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    var ApiToken = sharedPref.getString(apiToken);
     Uri url = Uri.parse('https://kbdevs.com/firstdose/api/users/v1/products');
     try {
       final response = await http.post(url, body: {
         "device_details": 'device_details',
         "app_version": 'app_version',
         'device_id': 'device_id',
-        'category_id' : productID,
-         "is_popular": "0",
+        'category_id': categoryID,
+        // "product_id": productID,
+        "is_popular": "0",
         'api_version': 'api_version',
         'device_type': 'android',
         'debug_mode': 'debug_mode'
-
-      }, headers: {});
+      }, headers: {
+        "Authorization": 'Bearer $ApiToken',
+      });
 
       // if (response.statusCode == 200) {z
       //   setState(() {
       var data = json.decode(response.body);
       log(response.body);
+      log(url.toString());
       var status = data['status'];
       var message = data['message'];
 
@@ -38,13 +46,20 @@ class ProductController extends GetxController {
         isLoading(false);
 
         productModel.value = ProductModel.fromJson(data);
+        debugPrint('agdgdgddhf');
 
         debugPrint(productModel.value.data!.products![0].name);
-      } else if (status == 0) {
-      } else {}
+      }
+      // else if (status == '0') {
+      //   // Get.snackbar(' This product is already available in the cart', '');
+      //
+      // }
+      else {
+        Get.snackbar('Product added to cart', '');
+      }
     } catch (e) {
       debugPrint('Error: $e');
-      Get.snackbar('Error', 'Failed to Load Data. Please try again.');
+      // Get.snackbar('Error', 'Failed to Load Data. Please try again.');
     }
   }
 }

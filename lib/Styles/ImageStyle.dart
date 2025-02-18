@@ -55,4 +55,10 @@ class ImageStyle {
   static const String ordersbottombaricon =
       'assets/images/ordersbottombaricon.svg';
   static const String multiVitamin = 'assets/images/multivitamins.png';
+  static const String gallery = 'assets/images/gallery.png';
+  static const String camera = 'assets/images/camera.png';
+  static const String delete = 'assets/images/delete.png';
+  static const String filter = 'assets/images/filter.png';
+  static const String nomedicine = 'assets/lottie/noMedicineFound.json';
+
 }

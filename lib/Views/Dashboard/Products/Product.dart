@@ -1,9 +1,12 @@
 import 'package:firstdose_user/Controller/CategoriesController.dart';
+import 'package:firstdose_user/Styles/ImageStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
+import '../../../Controller/MyCartController.dart';
 import '../../../Controller/ProductController.dart';
 import '../../../Controller/WishListController.dart';
 import '../../../Models/ProductModel.dart';
@@ -22,23 +25,25 @@ class Product extends StatefulWidget {
 
 class _ProductState extends State<Product> {
   final controller = Get.put(ProductController());
-  late String productID;
+  late String categoryID;
+  late String productCategory;
 
   @override
   void initState() {
     super.initState();
     final Map<String, dynamic> args = Get.arguments;
 
-    productID = args['productID'];
+    categoryID = args['categoryID'];
+    productCategory = args['productCategory'];
 
-    controller.product(productID);
+    controller.product(categoryID);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        appbarTitle: 'All Products',
+        appbarTitle: productCategory,
         isLeading: true,
         isCartIcon: true,
       ),
@@ -47,10 +52,25 @@ class _ProductState extends State<Product> {
           // Check if data is still loading
           if (controller.isLoading.value) {
             return Center(
-              child: SpinKitRotatingPlain(
+              child: CircularProgressIndicator(
                 color: ColorStyle.themeColor,
-                size: 50.0,
+                // size: 50.0,
               ),
+            );
+          } else if (controller.productModel.value.data!.products!.length == 0){
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+
+                 Lottie.asset(
+                   'assets/lottie/noMedicineFound.json'
+                ),
+                Text(
+                  'No Medicine is Available',
+                  style: CustomTextStyles.poppinsRegularBlack(fontSize: 16),
+                ),
+
+              ],
             );
           } else {
             // Show product data once loaded
@@ -75,108 +95,11 @@ class _ProductState extends State<Product> {
     );
   }
 
-  // List Container for displaying the products
-  // listContainer({required List<Products> data}) {
-  //   return ListView.builder(
-  //     padding: const EdgeInsets.all(8),
-  //     shrinkWrap: true,
-  //     scrollDirection: Axis.vertical,
-  //     physics: NeverScrollableScrollPhysics(),
-  //     itemCount: data.length,
-  //     itemBuilder: (context, index) {
-  //       return InkWell(
-  //         onTap: () {
-  //           Get.to(() => ProductDetails(), arguments: {
-  //             // 'product': data[index],
-  //             'productID': data[index].id.toString(),
-  //           });
-  //         },
-  //         child: Container(
-  //           alignment: Alignment.center,
-  //           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-  //           margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-  //           decoration: BoxDecoration(
-  //             color: Colors.white,
-  //             borderRadius: BorderRadius.circular(10),
-  //           ),
-  //           width: Get.width,
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.start,
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               Image.network(
-  //                 data[index].images!,
-  //                 height: 65,
-  //                 width: 65,
-  //               ),
-  //               const SizedBox(width: 10),
-  //               Expanded(
-  //                 flex: 5,
-  //                 child: Column(
-  //                   mainAxisAlignment: MainAxisAlignment.start,
-  //                   crossAxisAlignment: CrossAxisAlignment.start,
-  //                   children: [
-  //                     Text(
-  //                       data[index].name!,
-  //                       style:
-  //                           CustomTextStyles.poppinsRegularBlack(fontSize: 14),
-  //                     ),
-  //                     const SizedBox(height: 5),
-  //                     Text(
-  //                       '₹ ${data[index].price}',
-  //                       style: GoogleFonts.poppins(
-  //                         fontSize: 14,
-  //                         fontWeight: FontWeight.w400,
-  //                         color: ColorStyle.blackcolor,
-  //                       ),
-  //                     ),
-  //                     const SizedBox(height: 6),
-  //                     InkWell(
-  //                       onTap: () {},
-  //                       child: Container(
-  //                         decoration: BoxDecoration(
-  //                           color: ColorStyle.themeColor,
-  //                           borderRadius: BorderRadius.circular(5),
-  //                         ),
-  //                         padding:
-  //                             EdgeInsets.symmetric(vertical: 6, horizontal: 15),
-  //                         child: Text(
-  //                           'Add to cart',
-  //                           style: CustomTextStyles.poppinsMediumWhite(
-  //                               fontSize: 10),
-  //                         ),
-  //                       ),
-  //                     )
-  //                   ],
-  //                 ),
-  //               ),
-  //               Expanded(
-  //                 child: InkWell(
-  //                   onTap: () {
-  //                     Get.to(() => addToWishList, arguments: {
-  //                       // 'product': data[index],
-  //                       'productID': data[index].id.toString(),
-  //                     });
-  //                   },
-  //                   child: Container(
-  //                     padding: EdgeInsets.symmetric(vertical: 10),
-  //                     alignment: Alignment.topCenter,
-  //                     child: Icon(
-  //                       Icons.favorite,
-  //                       color: ColorStyle.themeColor,
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
   listContainer({required List<Products> data}) {
     final wishListController = Get.put(WishListController());
+    final addCartController = Get.put(MyCartController());
+    var product = controller.productModel.value.data!.products;
+    // Color _colorContainer = ColorStyle.blackcolor;
 
     return ListView.builder(
       padding: const EdgeInsets.all(8),
@@ -185,6 +108,9 @@ class _ProductState extends State<Product> {
       physics: NeverScrollableScrollPhysics(),
       itemCount: data.length,
       itemBuilder: (context, index) {
+        final addedInWishList = controller
+            .productModel.value.data!.products![index].addedInWishlisht
+            .toString();
         return InkWell(
           onTap: () {
             Get.to(() => ProductDetails(), arguments: {
@@ -218,7 +144,8 @@ class _ProductState extends State<Product> {
                     children: [
                       Text(
                         data[index].name!,
-                        style: CustomTextStyles.poppinsRegularBlack(fontSize: 14),
+                        style:
+                            CustomTextStyles.poppinsRegularBlack(fontSize: 14),
                       ),
                       const SizedBox(height: 5),
                       Text(
@@ -231,8 +158,15 @@ class _ProductState extends State<Product> {
                       ),
                       const SizedBox(height: 6),
                       InkWell(
-                        onTap: () {
-                          // Add to cart logic
+                        // onTap: () {
+                        //
+                        // },
+                        onTap: () async {
+                          await addCartController.addToMyCart(
+                            product![index].id.toString(),
+                          );
+
+                          // Get.snackbar('Product added to cart', '');
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -240,10 +174,11 @@ class _ProductState extends State<Product> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           padding:
-                          EdgeInsets.symmetric(vertical: 6, horizontal: 15),
+                              EdgeInsets.symmetric(vertical: 6, horizontal: 15),
                           child: Text(
                             'Add to cart',
-                            style: CustomTextStyles.poppinsMediumWhite(fontSize: 10),
+                            style: CustomTextStyles.poppinsMediumWhite(
+                                fontSize: 10),
                           ),
                         ),
                       ),
@@ -251,20 +186,22 @@ class _ProductState extends State<Product> {
                   ),
                 ),
                 Expanded(
-                  child: InkWell(
-                    onTap: () async {
-
-                      await wishListController.addToWishList(data[index].id.toString());
-                      Get.snackbar('Success', 'Product added to wishlist');
-
-                      Get.to(() => Wishlist());
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      alignment: Alignment.topCenter,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    alignment: Alignment.topCenter,
+                    child: InkWell(
+                      onTap: () async {
+                        await wishListController
+                            .addToWishList(data[index].id.toString());
+                        controller.product(categoryID);
+                      },
                       child: Icon(
                         Icons.favorite,
-                        color: ColorStyle.themeColor,
+                        color: addedInWishList != '0'
+                            ? ColorStyle.themeColor
+                            : ColorStyle.greycolor,
+
+                        // color: ColorStyle.greycolor,
                       ),
                     ),
                   ),

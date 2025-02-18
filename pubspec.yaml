@@ -38,6 +38,17 @@ dependencies:
   shared_preferences: ^2.3.5
   webview_flutter: ^4.10.0
   flutter_launcher_icons: ^0.14.3
+  flutter_spinkit: ^5.2.1
+  geolocator: ^13.0.2
+  image_picker: ^1.1.2
+  lottie: ^3.3.1
+  flutter_svg: ^2.0.17
+  sign_in_button: ^3.2.0
+  intl: ^0.20.2
+
+
+  html: ^0.15.5
+
 
 
 
@@ -68,6 +79,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/lottie/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

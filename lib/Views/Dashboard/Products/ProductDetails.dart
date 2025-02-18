@@ -1,4 +1,6 @@
+import 'package:firstdose_user/Controller/MyCartController.dart';
 import 'package:firstdose_user/Controller/ProductDetailController.dart';
+import 'package:firstdose_user/Utils/CustomAppBar.dart';
 import 'package:firstdose_user/Views/Cart/Cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
@@ -20,6 +22,10 @@ class _ProductDetailsState extends State<ProductDetails> {
   var h = Get.height;
   late String productID;
 
+  static String stripHtml(String text) {
+    return text.replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), '');
+  }
+
   @override
   // void initState() {
   //   super.initState();
@@ -37,12 +43,17 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        appbarTitle: "Product Details",
+        isCartIcon: true,
+        isLeading: true,
+      ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return Center(
-            child: SpinKitRotatingPlain(
+            child: CircularProgressIndicator(
               color: ColorStyle.themeColor,
-              size: 50.0,
+
             ),
           );
         } else {
@@ -52,21 +63,23 @@ class _ProductDetailsState extends State<ProductDetails> {
 
           var product = controller.productdetailModel.value.data!.products![0];
           var images = product.images ?? [];
+          final addCartController = Get.put(MyCartController());
 
           return Padding(
             padding: EdgeInsets.all(8),
             child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Image Slideshow
-                    if (images.isNotEmpty)
-                      ImageSlideshow(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image Slideshow
+                  if (images.isNotEmpty)
+                    Container(
+                      child: ImageSlideshow(
                         indicatorColor: ColorStyle.themeColor,
                         width: Get.width,
-                        height: h * 0.4,
+                        height: h * 0.3,
+                        // height: 56,
                         autoPlayInterval: 3000,
                         isLoop: true,
                         children: images.map((Url) {
@@ -76,127 +89,104 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: Image.network(
                                 Url,
                                 fit: BoxFit.cover,
-                                // errorBuilder: (context, error, stackTrace) {
-                                //   return Center(child: Icon(Icons.error, color: Colors.red));
-                                // },
                               )
                               // : Image.asset(imageUrl, fit: BoxFit.cover),
                               );
                         }).toList(),
-                      )
-                    else
-                      Center(
-                          child: Text("No images available for this product")),
-                    const SizedBox(
-                      height: 16,
+                      ),
                     ),
+                  SizedBox(
+                    height: 16,
+                  ),
 
-                    Container(
+                  Expanded(
+                    child: Container(
                       padding: EdgeInsets.all(16.0),
                       width: Get.width,
-                      height: h * 0.5,
+                      // height: h * 0.5,
                       decoration: BoxDecoration(
                         color: ColorStyle.whitecolor,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  '${product.name}',
-                                  // maxLines: 2,
-                                  // overflow: TextOverflow.ellipsis,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    '${product.name}',
+                                    // maxLines: 2,
+                                    // overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 20),
+                            Row(
+                              children: [
+                                Text(
+                                  '₹${product.price}',
                                   style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: ColorStyle.themeColor),
                                 ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              // overflow: TextOverflow.ellipsis,
+                              // maxLines: 9,
+                              stripHtml('${product.description}'),
+                              // '${product.description} ',
+                              style: GoogleFonts.poppins(
+                                fontSize: 18,
                               ),
-                            ],
-                          ),
-                          SizedBox(height: 8),
-                          Row(
-                            children: [
-                              // Text(
-                              //   'by ${product.description}',
-                              //   style: TextStyle(
-                              //     fontSize: 15,
-                              //     fontWeight: FontWeight.w400,
-                              //     color: Colors.grey,
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                          SizedBox(height: 16),
-                          Row(
-                            children: [
-                              Text(
-                                '${product.price}',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorStyle.themeColor),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Stack(
-                            children: [
-                              Text(
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 9,
-                                '${product.description} ',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: h * 0.2),
-                                child: SizedBox(
-                                  width: Get.width,
-                                  height: 56,
-                                  child: ElevatedButton(
-                                    // onPressed: () {
-                                    //   // Get.to(() => Cart());
-                                    // },
-                                    onPressed: () {
-
-                                      Get.to(() => Cart(), arguments: {
-                                        // 'product': data[index],
-                                        'productID': product.id.toString(),
-                                      });
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: ColorStyle.themeColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            12), // Button border radius
-                                      ),
-                                    ),
-                                    child: Text(
-                                      "Add To Cart",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white, // Text color
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                  Container(
+                    width: Get.width,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await addCartController
+                            .addToMyCart(product.id.toString());
+                        Get.snackbar('Success', 'Product added to cart');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorStyle.themeColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(12), // Button border radius
+                        ),
+                      ),
+                      child: Text(
+                        "Add To Cart",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white, // Text color
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                ],
               ),
             ),
           );

@@ -43,6 +43,7 @@ class MyCartController extends GetxController {
         debugPrint(model.value.data!.cartTotal);
       } else if (status == 0) {
         isLoading(false);
+        Get.snackbar("Already", "Look like this product already available in your cart");
       } else {
         Get.snackbar("Error", "Data is not loadding correctly");
       }
@@ -54,8 +55,7 @@ class MyCartController extends GetxController {
 
   addToMyCart( String productId) async {
     {
-      Uri url =
-      Uri.parse('https://kbdevs.com/firstdose/api/users/v1/add-to-cart');
+      Uri url = Uri.parse('https://kbdevs.com/firstdose/api/users/v1/add-to-cart');
       SharedPreferences sharedPref = await SharedPreferences.getInstance();
       var ApiToken = sharedPref.getString(apiToken);
 
@@ -87,10 +87,12 @@ class MyCartController extends GetxController {
         var status = data['status'];
         var message = data['message'];
 
-        if (status == "1") {
+        if (status == 1) {
           debugPrint(message);
-          // await myCart(productId);
-        }
+          // await myCart();
+        }else if(status == 0){
+          Get.snackbar("This product is already available in the cart", "");
+        }else{}
       } catch (e) {
         debugPrint('Error: $e');
         Get.snackbar('Error', 'Failed to modify cart: $e');
@@ -103,7 +105,7 @@ class MyCartController extends GetxController {
 
   }
 
-  modifyCart( String productId) async {
+  modifyCart( String productId, String cartId) async {
     Uri url =
         Uri.parse('https://kbdevs.com/firstdose/api/users/v1/update-cart');
     SharedPreferences sharedPref = await SharedPreferences.getInstance();
@@ -118,7 +120,7 @@ class MyCartController extends GetxController {
           "flag": "remove_product",
           "product_id": productId.toString(),
 
-          "cart_id": 305.toString(),
+          "cart_id": cartId,
           // flag must be plus, minus, remove_product, clear_cart
           // send_data_flag must be 'all', 'other'
 
