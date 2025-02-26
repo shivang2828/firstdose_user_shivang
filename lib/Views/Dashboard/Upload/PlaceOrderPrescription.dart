@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firstdose_user/Controller/AddressController.dart';
 import 'package:firstdose_user/Utils/CustomAppBar.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,25 +7,31 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../Controller/UploadPrescriptionController.dart';
 import '../../../Styles/ColorStyle.dart';
 import '../../../Styles/CustomTextStyles.dart';
 import '../../Cart/ShippingInformation.dart';
 
 class PlaceOrderPrescription extends StatefulWidget {
-  const PlaceOrderPrescription({super.key});
+  PlaceOrderPrescription({super.key});
 
+  List<File> imageList = Get.arguments[0];
+  var message = Get.arguments[1];
   @override
   State<PlaceOrderPrescription> createState() => _PlaceOrderPrescriptionState();
 }
 
 class _PlaceOrderPrescriptionState extends State<PlaceOrderPrescription> {
-  final AddressController controller = Get.put(AddressController());
+  // final AddressController controller = Get.put(AddressController());
+  final UploadPrescriptionController uploadPrescriptionController =
+  Get.put(UploadPrescriptionController());
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller.addressController();
+    uploadPrescriptionController.addressController();
   }
 
   @override
@@ -66,7 +74,7 @@ class _PlaceOrderPrescriptionState extends State<PlaceOrderPrescription> {
                 height: 10,
               ),
               Obx(() {
-                if (controller.isLoading.value) {
+                if (uploadPrescriptionController.isLoading.value) {
                   return Center(
                     child: CircularProgressIndicator(
                       color: ColorStyle.themeColor,
@@ -76,9 +84,9 @@ class _PlaceOrderPrescriptionState extends State<PlaceOrderPrescription> {
                   return ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: controller.model.value.data!.length,
+                    itemCount: uploadPrescriptionController.addressModel.value.data!.length,
                     itemBuilder: (context, index) {
-                      var data = controller.model.value.data![index];
+                      var data = uploadPrescriptionController.addressModel.value.data![index];
                       return Obx(
                         () => Container(
                           // padding: EdgeInsets.symmetric(vertical: 5),
@@ -86,7 +94,7 @@ class _PlaceOrderPrescriptionState extends State<PlaceOrderPrescription> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                  color: (controller.selectedAddress.value ==
+                                  color: (uploadPrescriptionController.selectedAddress.value ==
                                           index)
                                       ? ColorStyle.themeColor
                                       : ColorStyle.greyD9D9D9,
@@ -130,9 +138,9 @@ class _PlaceOrderPrescriptionState extends State<PlaceOrderPrescription> {
                               ],
                             ),
                             value: index,
-                            groupValue: controller.selectedAddress.value,
+                            groupValue: uploadPrescriptionController.selectedAddress.value,
                             onChanged: (value) {
-                              controller.selectedAddress.value = index;
+                              uploadPrescriptionController.selectedAddress.value = index;
                             },
                           ),
                         ),
@@ -146,16 +154,19 @@ class _PlaceOrderPrescriptionState extends State<PlaceOrderPrescription> {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  // onPressed: () {
-                  //   Get.to(() => const SelectPaymentMethod());
-                  // },
+                  onPressed: () {
+                    uploadPrescriptionController.uploadPrep(
+                        imageList: widget.imageList,
+                        message: widget.message
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: ColorStyle.themeColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  onPressed: () {},
+
                   child: const Text(
                     "Place Order",
                     style: TextStyle(

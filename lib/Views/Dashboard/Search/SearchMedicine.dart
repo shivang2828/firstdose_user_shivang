@@ -50,7 +50,7 @@ class _SearchMedicineState extends State<SearchMedicine> {
 
                   }
                 },
-                controller: TextEditingController(),
+                textEditingController: TextEditingController(),
               ),
               const SizedBox(height: 20),
               Expanded(
@@ -59,7 +59,7 @@ class _SearchMedicineState extends State<SearchMedicine> {
                     return Center(
                       child: CircularProgressIndicator(
                         color: ColorStyle.themeColor,
-                        strokeCap: StrokeCap.butt,
+                        // strokeCap: StrokeCap.butt,
                       ),
                     );
                   }
@@ -154,7 +154,7 @@ class CustomSearchBar extends StatelessWidget {
   final String hintText;
   final TextStyle hintStyle;
   final ValueChanged<String> onChanged;
-  final TextEditingController controller;
+  final TextEditingController textEditingController;
 
   const CustomSearchBar({
     super.key,
@@ -163,7 +163,7 @@ class CustomSearchBar extends StatelessWidget {
     required this.hintStyle,
     required this.onChanged,
 
-    required this.controller,
+    required this.textEditingController,
   });
 
   @override
@@ -173,7 +173,9 @@ class CustomSearchBar extends StatelessWidget {
       decoration: InputDecoration(
         suffixIcon: IconButton(
           onPressed: (){
-            controller.clear;
+            // textEditingController.value.
+            // TextEditingController().value ='' as TextEditingValue;
+            textEditingController.clear();
             onChanged('');
           },
           icon: Icon(Icons.clear),

@@ -1,5 +1,6 @@
 import 'package:firstdose_user/Controller/MyCartController.dart';
 import 'package:firstdose_user/Controller/ProductDetailController.dart';
+import 'package:firstdose_user/Data/AppButton.dart';
 import 'package:firstdose_user/Utils/CustomAppBar.dart';
 import 'package:firstdose_user/Views/Cart/Cart.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
   final controller = Get.put(ProductDetailController());
+
   // final MyCartController myCartController = Get.put(MyCartController());
   var h = Get.height;
   late String productID;
@@ -58,9 +60,9 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
           );
         } else {
-          if (controller.productdetailModel.value.data!.products!.isEmpty) {
-            return Center(child: Text("No product details available"));
-          }
+          // if (controller.productdetailModel.value.data!.products!.isEmpty ) {
+          //   return Center(child: Text("No product details available"));
+          // }
 
           var product = controller.productdetailModel.value.data!.products![0];
           var images = product.images ?? [];
@@ -138,8 +140,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     Text(
                                       '₹${product.price}',
                                       style: TextStyle(
-                                          decoration: (product.originalPrice! !=
-                                                  product.discountedPrice!)
+                                          decoration: (double.tryParse(product
+                                                      .price
+                                                      .toString()) !=
+                                                  double.tryParse(product
+                                                      .discountedPrice!
+                                                      .toString()))
                                               ? TextDecoration.lineThrough
                                               : TextDecoration.none,
                                           fontSize: 18,
@@ -149,8 +155,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     const SizedBox(
                                       width: 5,
                                     ),
-                                    (product.originalPrice! !=
-                                            product.discountedPrice)
+                                    (double.tryParse(
+                                                product.price!.toString()) !=
+                                            double.tryParse(product
+                                                .discountedPrice
+                                                .toString()))
                                         ? Text(
                                             '₹${product.discountedPrice}',
                                             style: TextStyle(
@@ -343,47 +352,92 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
 
-                  Container(
-                    width: Get.width,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        if (product.cartQuantity != 0) {
-                          if (controller.count.value > 1) {
-                            // await addCartController.updateCart(
-                            //     flag: 'plus',
-                            //     productId: product.id.toString(),
-                            //     quantity: controller.count.value.toString());
-                          } else {
-                            await controller.addToCart(product.id.toString(),
-                                controller.count.value.toString());
-                          }
+                  InkWell(
+                    onTap: () async {
+                      // if (product.cart_quantity != 0) {
+                      //   debugPrint('error0');
+                      //   if (controller.count.value > 1) {
+                      //     await controller.updateCart();
+                      //
+                      //     debugPrint('error1');
+                      //   } else {
+                      //     debugPrint('error2');
+                      //     await controller.addToCart(product.id.toString(),
+                      //         controller.count.value.toString());
+                      //   }
+                      // } else {
+                      //   debugPrint('error4');
+                      //   await controller.addToCart(product.id.toString(),
+                      //       controller.count.value.toString());
+                      // }
+                      if (controller.count.value != 0) {
+                        if (controller.productdetailModel.value.data!
+                                .products![0].cartQuantity.value !=
+                            0) {
+                          controller.updateCart();
                         } else {
-                          await controller.addToCart(product.id.toString(),
-                              controller.count.value.toString());
+                          controller.addToCart();
                         }
-
-                        // Get.snackbar('Success', 'Product added to cart');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: controller.count.value == 0
-                            ? ColorStyle.greyD9D9D9
-                            : ColorStyle.themeColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(12), // Button border radius
-                        ),
-                      ),
-                      child: Text(
-                        "Add To Cart",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white, // Text color
-                        ),
-                      ),
+                      } else {
+                        Get.snackbar('Alert', 'Please select quantity',
+                            colorText: Colors.white,
+                            backgroundColor: ColorStyle.themeColor);
+                      }
+                    },
+                    child: AppButton(
+                      buttoncolor: controller.count.value == 0 ||
+                              controller.buttonProcessing[productID] == true
+                          ? ColorStyle.greyD9D9D9
+                          : ColorStyle.themeColor,
+                      buttonfontcolor: ColorStyle.whitecolor,
+                      buttontext: controller.buttonProcessing[productID] == true
+                          ? 'Processing'
+                          : 'Add to Cart',
                     ),
                   ),
+
+                  // Container(
+                  //   width: Get.width,
+                  //   height: 56,
+                  //   child: ElevatedButton(
+                  //     onPressed: () async {
+                  //       if (product.cartQuantity != 0) {
+                  //         if (controller.count.value > 1) {
+                  //           // await addCartController.updateCart(
+                  //           //     flag: 'plus',
+                  //           //     productId: product.id.toString(),
+                  //           //     quantity: controller.count.value.toString());
+                  //
+                  //         } else {
+                  //           await controller.addToCart(product.id.toString(),
+                  //               controller.count.value.toString());
+                  //         }
+                  //       } else {
+                  //         await controller.addToCart(product.id.toString(),
+                  //             controller.count.value.toString());
+                  //       }
+                  //
+                  //       // Get.snackbar('Success', 'Product added to cart');
+                  //     },
+                  //     style: ElevatedButton.styleFrom(
+                  //       backgroundColor: controller.count.value == 0
+                  //           ? ColorStyle.greyD9D9D9
+                  //           : ColorStyle.themeColor,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius:
+                  //             BorderRadius.circular(12), // Button border radius
+                  //       ),
+                  //     ),
+                  //     child: Text(
+                  //       "Add To Cart",
+                  //       style: TextStyle(
+                  //         fontSize: 18,
+                  //         fontWeight: FontWeight.bold,
+                  //         color: Colors.white, // Text color
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 25,
                   ),

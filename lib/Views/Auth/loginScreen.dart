@@ -1,6 +1,7 @@
 import 'package:firstdose_user/Views/Dashboard/Home/HomeScreen.dart';
 import 'package:firstdose_user/Views/NavigationBar/NavigationBar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -38,7 +39,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Get.offAll(BottomNavBar());
+                        Get.offAll(BottomNavBar(
+                          selected: 0,
+                        ));
                       },
                       child: Text(
                         'Skip',
@@ -73,6 +76,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   key: mobileFormKey,
                   child: TextFormField(
                     controller: controller.phoneController.value,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400
+                    ),
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(10)
+                    ],
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
@@ -154,7 +163,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 
   Widget _buildMiddleText() {
     return Stack(

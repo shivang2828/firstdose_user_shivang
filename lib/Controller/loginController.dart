@@ -38,6 +38,8 @@ class LoginController extends GetxController {
 
 
 
+
+
         Get.to(() => Otpscreen(phoneNumber: phoneController.value.text));
       } else if (status == 0) {
         debugPrint(message ?? 'OTP send failed');

@@ -25,7 +25,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (remainingTime == 0) {
         timer.cancel();
-        Get.to(() => BottomNavBar());
+        Get.to(() => BottomNavBar(selected: 0,));
       } else {
         setState(() {
           remainingTime--;

@@ -1,28 +1,30 @@
+import 'package:get/get.dart';
+
 class OrderModel {
-  int? status;
-  int? perPageData;
-  int? totalData;
-  String? page;
-  List<Data>? data;
-  String? message;
+  dynamic status;
+  dynamic per_page_data;
+  dynamic total_data;
+  dynamic page;
+  var data = [].obs;
+  dynamic message;
 
   OrderModel(
       {this.status,
-        this.perPageData,
-        this.totalData,
-        this.page,
-        this.data,
-        this.message});
+      required this.data,
+      this.message,
+      this.page,
+      this.per_page_data,
+      this.total_data});
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    perPageData = json['per_page_data'];
-    totalData = json['total_data'];
     page = json['page'];
+    per_page_data = json['per_page_data'];
+    total_data = json['total_data'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data.value = <OrderData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data.add(new OrderData.fromJson(v));
       });
     }
     message = json['message'];
@@ -31,89 +33,80 @@ class OrderModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
-    data['per_page_data'] = this.perPageData;
-    data['total_data'] = this.totalData;
+    data['total_data'] = this.total_data;
     data['page'] = this.page;
+    data['per_page_data'] = this.per_page_data;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data.map((v) => v.toJson()).toList();
     }
     data['message'] = this.message;
     return data;
   }
 }
 
-class Data {
-  int? id;
-  String? orderType;
-  int? userId;
-  int? cartId;
-  int? addressId;
-  Null? merchantDetailId;
-  String? orderUniqueId;
-  String? totalPaidAmount;
-  String? orderSubTotal;
-  String? orderTotal;
-  Null? couponId;
-  String? totalCouponDiscountAmount;
-  String? totalItemDiscount;
-  String? orderStatus;
-  Null? masterId;
-  String? paymentStatus;
-  String? orderDescription;
-  int? prescriptionId;
-  Null? bill;
-  Null? deletedAt;
-  String? createdAt;
-  String? updatedAt;
+class OrderData {
+  dynamic id;
+  dynamic userId;
+  dynamic cartId;
+  dynamic addressId;
+  dynamic merchantDetailId;
+  dynamic orderUniqueId;
+  dynamic totalPaidAmount;
+  dynamic order_type;
+  dynamic orderSubTotal;
+  dynamic orderTotal;
+  dynamic couponId;
+  dynamic totalCouponDiscountAmount;
+  dynamic totalItemDiscount;
+  dynamic orderStatus;
+  dynamic order_description;
+  dynamic paymentStatus;
+  dynamic deletedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
   Prescription? prescription;
   List<OrderItem>? orderItem;
 
-  Data(
+  OrderData(
       {this.id,
-        this.orderType,
-        this.userId,
-        this.cartId,
-        this.addressId,
-        this.merchantDetailId,
-        this.orderUniqueId,
-        this.totalPaidAmount,
-        this.orderSubTotal,
-        this.orderTotal,
-        this.couponId,
-        this.totalCouponDiscountAmount,
-        this.totalItemDiscount,
-        this.orderStatus,
-        this.masterId,
-        this.paymentStatus,
-        this.orderDescription,
-        this.prescriptionId,
-        this.bill,
-        this.deletedAt,
-        this.createdAt,
-        this.updatedAt,
-        this.prescription,
-        this.orderItem});
+      this.userId,
+      this.cartId,
+      this.addressId,
+      this.merchantDetailId,
+      this.orderUniqueId,
+      this.totalPaidAmount,
+      this.order_type,
+      this.orderSubTotal,
+      this.orderTotal,
+      this.couponId,
+      this.totalCouponDiscountAmount,
+      this.totalItemDiscount,
+      this.order_description,
+      this.orderStatus,
+      this.paymentStatus,
+      this.deletedAt,
+      this.createdAt,
+      this.updatedAt,
+      this.prescription,
+      this.orderItem});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  OrderData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    orderType = json['order_type'];
     userId = json['user_id'];
     cartId = json['cart_id'];
     addressId = json['address_id'];
     merchantDetailId = json['merchant_detail_id'];
     orderUniqueId = json['order_unique_id'];
     totalPaidAmount = json['total_paid_amount'];
+    order_type = json['order_type'];
     orderSubTotal = json['order_sub_total'];
+    order_description = json['order_description'];
     orderTotal = json['order_total'];
     couponId = json['coupon_id'];
     totalCouponDiscountAmount = json['total_coupon_discount_amount'];
     totalItemDiscount = json['total_item_discount'];
     orderStatus = json['order_status'];
-    masterId = json['master_id'];
     paymentStatus = json['payment_status'];
-    orderDescription = json['order_description'];
-    prescriptionId = json['prescription_id'];
-    bill = json['bill'];
     deletedAt = json['deleted_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -131,8 +124,8 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['order_type'] = this.orderType;
     data['user_id'] = this.userId;
+    data['order_type'] = this.order_type;
     data['cart_id'] = this.cartId;
     data['address_id'] = this.addressId;
     data['merchant_detail_id'] = this.merchantDetailId;
@@ -140,15 +133,12 @@ class Data {
     data['total_paid_amount'] = this.totalPaidAmount;
     data['order_sub_total'] = this.orderSubTotal;
     data['order_total'] = this.orderTotal;
+    data['order_description'] = this.order_description;
     data['coupon_id'] = this.couponId;
     data['total_coupon_discount_amount'] = this.totalCouponDiscountAmount;
     data['total_item_discount'] = this.totalItemDiscount;
     data['order_status'] = this.orderStatus;
-    data['master_id'] = this.masterId;
     data['payment_status'] = this.paymentStatus;
-    data['order_description'] = this.orderDescription;
-    data['prescription_id'] = this.prescriptionId;
-    data['bill'] = this.bill;
     data['deleted_at'] = this.deletedAt;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
@@ -173,18 +163,18 @@ class Prescription {
 
   Prescription(
       {this.id,
-        this.userId,
-        this.message,
-        this.files,
-        this.deletedAt,
-        this.createdAt,
-        this.updatedAt});
+      this.userId,
+      this.message,
+      this.files,
+      this.deletedAt,
+      this.createdAt,
+      this.updatedAt});
 
   Prescription.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     message = json['message'];
-    files = json['files'].cast<String>();
+    files = (json['files'] == null) ? [] : json['files'].cast<String>();
     deletedAt = json['deleted_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -204,30 +194,30 @@ class Prescription {
 }
 
 class OrderItem {
-  int? id;
-  int? orderId;
-  int? productId;
-  String? totalPrice;
-  String? totalDiscountedPrice;
-  int? quantity;
-  Null? deletedAt;
-  String? createdAt;
-  String? updatedAt;
+  dynamic id;
+  dynamic orderId;
+  dynamic productId;
+  dynamic totalPrice;
+  dynamic totalDiscountedPrice;
+  dynamic quantity;
+  dynamic deletedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
   Order? order;
   Product? product;
 
   OrderItem(
       {this.id,
-        this.orderId,
-        this.productId,
-        this.totalPrice,
-        this.totalDiscountedPrice,
-        this.quantity,
-        this.deletedAt,
-        this.createdAt,
-        this.updatedAt,
-        this.order,
-        this.product});
+      this.orderId,
+      this.productId,
+      this.totalPrice,
+      this.totalDiscountedPrice,
+      this.quantity,
+      this.deletedAt,
+      this.createdAt,
+      this.updatedAt,
+      this.order,
+      this.product});
 
   OrderItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -241,7 +231,7 @@ class OrderItem {
     updatedAt = json['updated_at'];
     order = json['order'] != null ? new Order.fromJson(json['order']) : null;
     product =
-    json['product'] != null ? new Product.fromJson(json['product']) : null;
+        json['product'] != null ? new Product.fromJson(json['product']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -266,56 +256,45 @@ class OrderItem {
 }
 
 class Order {
-  int? id;
-  String? orderType;
-  int? userId;
-  int? cartId;
-  int? addressId;
-  Null? merchantDetailId;
-  String? orderUniqueId;
-  String? totalPaidAmount;
-  String? orderSubTotal;
-  String? orderTotal;
-  Null? couponId;
-  String? totalCouponDiscountAmount;
-  String? totalItemDiscount;
-  String? orderStatus;
-  Null? masterId;
-  String? paymentStatus;
-  Null? orderDescription;
-  Null? prescriptionId;
-  Null? bill;
-  Null? deletedAt;
-  String? createdAt;
-  String? updatedAt;
+  dynamic id;
+  dynamic userId;
+  dynamic cartId;
+  dynamic addressId;
+  dynamic merchantDetailId;
+  dynamic orderUniqueId;
+  dynamic totalPaidAmount;
+  dynamic orderSubTotal;
+  dynamic orderTotal;
+  dynamic couponId;
+  dynamic totalCouponDiscountAmount;
+  dynamic totalItemDiscount;
+  dynamic orderStatus;
+  dynamic paymentStatus;
+  dynamic deletedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
 
   Order(
       {this.id,
-        this.orderType,
-        this.userId,
-        this.cartId,
-        this.addressId,
-        this.merchantDetailId,
-        this.orderUniqueId,
-        this.totalPaidAmount,
-        this.orderSubTotal,
-        this.orderTotal,
-        this.couponId,
-        this.totalCouponDiscountAmount,
-        this.totalItemDiscount,
-        this.orderStatus,
-        this.masterId,
-        this.paymentStatus,
-        this.orderDescription,
-        this.prescriptionId,
-        this.bill,
-        this.deletedAt,
-        this.createdAt,
-        this.updatedAt});
+      this.userId,
+      this.cartId,
+      this.addressId,
+      this.merchantDetailId,
+      this.orderUniqueId,
+      this.totalPaidAmount,
+      this.orderSubTotal,
+      this.orderTotal,
+      this.couponId,
+      this.totalCouponDiscountAmount,
+      this.totalItemDiscount,
+      this.orderStatus,
+      this.paymentStatus,
+      this.deletedAt,
+      this.createdAt,
+      this.updatedAt});
 
   Order.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    orderType = json['order_type'];
     userId = json['user_id'];
     cartId = json['cart_id'];
     addressId = json['address_id'];
@@ -328,11 +307,7 @@ class Order {
     totalCouponDiscountAmount = json['total_coupon_discount_amount'];
     totalItemDiscount = json['total_item_discount'];
     orderStatus = json['order_status'];
-    masterId = json['master_id'];
     paymentStatus = json['payment_status'];
-    orderDescription = json['order_description'];
-    prescriptionId = json['prescription_id'];
-    bill = json['bill'];
     deletedAt = json['deleted_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -341,7 +316,6 @@ class Order {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['order_type'] = this.orderType;
     data['user_id'] = this.userId;
     data['cart_id'] = this.cartId;
     data['address_id'] = this.addressId;
@@ -354,11 +328,7 @@ class Order {
     data['total_coupon_discount_amount'] = this.totalCouponDiscountAmount;
     data['total_item_discount'] = this.totalItemDiscount;
     data['order_status'] = this.orderStatus;
-    data['master_id'] = this.masterId;
     data['payment_status'] = this.paymentStatus;
-    data['order_description'] = this.orderDescription;
-    data['prescription_id'] = this.prescriptionId;
-    data['bill'] = this.bill;
     data['deleted_at'] = this.deletedAt;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
@@ -367,48 +337,48 @@ class Order {
 }
 
 class Product {
-  int? id;
-  int? categoryId;
-  String? name;
-  String? shortDescription;
-  String? description;
-  int? price;
-  int? discountedPrice;
-  Null? drugInteractions;
-  Null? sideEffects;
-  Null? productManufactured;
-  Null? saltComposition;
-  int? ordering;
-  String? status;
+  dynamic id;
+  dynamic categoryId;
+  dynamic name;
+  dynamic shortDescription;
+  dynamic description;
+  dynamic price;
+  dynamic discountedPrice;
+  dynamic drugInteractions;
+  dynamic sideEffects;
+  dynamic productManufactured;
+  dynamic saltComposition;
+  dynamic ordering;
+  dynamic status;
   List<String>? images;
-  String? soldOut;
-  String? isPopular;
-  Null? deletedAt;
-  String? createdAt;
-  String? updatedAt;
+  dynamic soldOut;
+  dynamic isPopular;
+  dynamic deletedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
   Category? category;
 
   Product(
       {this.id,
-        this.categoryId,
-        this.name,
-        this.shortDescription,
-        this.description,
-        this.price,
-        this.discountedPrice,
-        this.drugInteractions,
-        this.sideEffects,
-        this.productManufactured,
-        this.saltComposition,
-        this.ordering,
-        this.status,
-        this.images,
-        this.soldOut,
-        this.isPopular,
-        this.deletedAt,
-        this.createdAt,
-        this.updatedAt,
-        this.category});
+      this.categoryId,
+      this.name,
+      this.shortDescription,
+      this.description,
+      this.price,
+      this.discountedPrice,
+      this.drugInteractions,
+      this.sideEffects,
+      this.productManufactured,
+      this.saltComposition,
+      this.ordering,
+      this.status,
+      this.images,
+      this.soldOut,
+      this.isPopular,
+      this.deletedAt,
+      this.createdAt,
+      this.updatedAt,
+      this.category});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -424,7 +394,8 @@ class Product {
     saltComposition = json['salt_composition'];
     ordering = json['ordering'];
     status = json['status'];
-    images = json['images'].cast<String>();
+    images = (json['images'] == null) ? [] : json['images'].cast<String>();
+    // = json['images'].cast<String>();
     soldOut = json['sold_out'];
     isPopular = json['is_popular'];
     deletedAt = json['deleted_at'];
@@ -464,26 +435,24 @@ class Product {
 }
 
 class Category {
-  int? id;
-  String? name;
-  String? image;
-  int? ordering;
-  String? status;
-  String? showOnApp;
-  Null? deletedAt;
-  String? createdAt;
-  String? updatedAt;
+  dynamic id;
+  dynamic name;
+  dynamic image;
+  dynamic ordering;
+  dynamic status;
+  dynamic deletedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
 
   Category(
       {this.id,
-        this.name,
-        this.image,
-        this.ordering,
-        this.status,
-        this.showOnApp,
-        this.deletedAt,
-        this.createdAt,
-        this.updatedAt});
+      this.name,
+      this.image,
+      this.ordering,
+      this.status,
+      this.deletedAt,
+      this.createdAt,
+      this.updatedAt});
 
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -491,7 +460,6 @@ class Category {
     image = json['image'];
     ordering = json['ordering'];
     status = json['status'];
-    showOnApp = json['show_on_app'];
     deletedAt = json['deleted_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -504,7 +472,6 @@ class Category {
     data['image'] = this.image;
     data['ordering'] = this.ordering;
     data['status'] = this.status;
-    data['show_on_app'] = this.showOnApp;
     data['deleted_at'] = this.deletedAt;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;

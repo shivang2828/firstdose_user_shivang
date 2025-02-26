@@ -2,48 +2,52 @@ import 'dart:async';
 
 import 'package:firstdose_user/Utils/Const.dart';
 import 'package:firstdose_user/Views/Auth/loginScreen.dart';
+import 'package:firstdose_user/Views/NavigationBar/NavigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'NavigationBar/NavigationBar.dart';
-
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key}); // Add constructor name here
+  const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() =>
-      _SplashScreenState(); // Use Splashscreen here
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // Use correct State class
-
-  // static const String KEYLOGIN ='login';
-
   @override
   void initState() {
-    sharedPref();
-    // TODO: implement initState
     super.initState();
-
-    // whereToGo();
+    _initializeApp();
   }
 
-  sharedPref() async {
+
+  Future<void> _initializeApp() async {
+    // await _requestNotificationPermission();
+    _checkLoginAndNavigate();
+  }
+
+  // Future<void> _requestNotificationPermission() async {
+  //   final status = await Permission.notification.request();
+  //   if (status.isGranted) {
+  //     print("Notification permission granted.");
+  //   } else if (status.isDenied) {
+  //     print("Notification permission denied.");
+  //   } else if (status.isPermanentlyDenied) {
+  //     await openAppSettings();
+  //   }
+  // }
+
+  Future<void> _checkLoginAndNavigate() async {
     SharedPreferences sharePref = await SharedPreferences.getInstance();
     var isUserLogin = sharePref.getBool(isLogin);
 
     Timer(
-      Duration(seconds: 3),
+      const Duration(seconds: 3),
       () {
-        if (isUserLogin != null) {
-          if (isUserLogin) {
-            // Get.offAll(HomeScreen());
-            Get.offAll(BottomNavBar());
-          } else {
-            Get.offAll(LoginScreen());
-          }
+        if (isUserLogin != null && isUserLogin) {
+          Get.offAll(BottomNavBar(selected: 0));
         } else {
           Get.offAll(LoginScreen());
         }
@@ -56,8 +60,6 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
           child: Image.asset(
             'assets/images/splash.png',
             height: 200,
@@ -68,5 +70,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-
-

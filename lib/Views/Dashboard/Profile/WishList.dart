@@ -58,11 +58,11 @@ class _WishlistState extends State<Wishlist> {
           return Center(
             child: CircularProgressIndicator(
               color: ColorStyle.themeColor,
-
             ),
           );
         } else {
-          if ( controller.wishListModel.value.data == null || controller.wishListModel.value.data!.length == 0 ) {
+          if (controller.wishListModel.value.data == null ||
+              controller.wishListModel.value.data!.length == 0) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -95,7 +95,7 @@ class _WishlistState extends State<Wishlist> {
                       onRemove: () async {
                         await controller.removeProductFromWishList(
                             productsItem[index].id.toString());
-                        controller.fetchWishList();
+                        // controller.fetchWishList();
                       },
                     ),
                   ),
@@ -174,13 +174,14 @@ listContainer({
             ),
           ),
           Expanded(
+            flex: 1,
             child: InkWell(
               onTap: onRemove,
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 alignment: Alignment.topCenter,
                 child: Icon(
-                  Icons.delete_forever_outlined,
+                  Icons.favorite,
                   color: ColorStyle.themeColor,
                 ),
               ),

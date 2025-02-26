@@ -13,7 +13,9 @@ import '../Utils/Const.dart';
 class WishListController extends GetxController {
   var wishListModel = WishListModel().obs;
   var isLoading = false.obs;
+
   // var IsLogin = false.obs;
+  var addedInWishList = 0.obs;
 
   fetchWishList() async {
     Uri url = Uri.parse('https://kbdevs.com/firstdose/api/users/v1/wishlist');
@@ -94,7 +96,8 @@ class WishListController extends GetxController {
         var status = data['status'];
         var message = data['message'];
 
-        if (status == "1") {
+        if (status == 1) {
+          isLoading(false);
           debugPrint(message);
         }
       } else {

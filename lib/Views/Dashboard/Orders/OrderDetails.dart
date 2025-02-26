@@ -341,24 +341,27 @@ class _OrderDetailsState extends State<OrderDetails> {
                           Expanded(
                             child: Text(
                               '${orderItem[itemIndex].quantity} X ${orderItem[itemIndex].product!.name}',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                              ),
+                              // style: GoogleFonts.poppins(
+                              //   fontWeight: FontWeight.w500,
+                              //   fontSize: 12,
+                              // ),
+                              style: CustomTextStyles.poppinsMediumBlack(fontSize: 12),
                             ),
                           ),
                           Text('₹${orderItem[itemIndex].product!.price}',
-                          style: GoogleFonts.poppins(
-                            color: ColorStyle.themeColor,
-                            fontWeight: FontWeight.w500
-                          ),
+                          // style: GoogleFonts.poppins(
+                          //   color: ColorStyle.themeColor,
+                          //   fontWeight: FontWeight.w500
+                          // ),
+                            style: CustomTextStyles.poppinsMediumBlack(fontSize: 12),
 
                           )
                         ]),
-                    Divider(
-                      color: ColorStyle.greycolor,
-                      thickness: 0.5,
-                    ),
+                    SizedBox(height: 2,)
+                    // Divider(
+                    //   color: ColorStyle.greycolor,
+                    //   thickness: 0.5,
+                    // ),
                   ],
                 );
               },

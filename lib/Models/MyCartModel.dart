@@ -23,9 +23,91 @@ class MyCartModel {
     return data;
   }
 }
+// class CartData {
+//   int? id;
+//   int? userId;
+//   String? cartSubTotal;
+//   String? cartTotal;
+//   String? deletedAt;
+//   String? createdAt;
+//   String? updatedAt;
+//   Coupon? coupon;
+//   List<CartItem>? cartItem;
+//   List<Payments>? payments;
+//
+//   CartData(
+//       {this.id,
+//         this.userId,
+//         this.cartSubTotal,
+//         this.cartTotal,
+//         this.deletedAt,
+//         this.createdAt,
+//         this.updatedAt,
+//         this.cartItem,
+//         this.coupon,
+//         this.payments});
+//
+//   CartData.fromJson(Map<String, dynamic> json) {
+//     id = json['id'];
+//     userId = json['user_id'];
+//     cartSubTotal = json['cart_sub_total'];
+//     cartTotal = json['cart_total'];
+//     deletedAt = json['deleted_at'];
+//     createdAt = json['created_at'];
+//     updatedAt = json['updated_at'];
+//     coupon =
+//     json['coupon'] != null ? new Coupon.fromJson(json['coupon']) : null;
+//     /* if (json['coupon'] != null) {
+//       coupon = <Coupon>[];
+//       json['coupon'].forEach((v) {
+//         coupon!.add(new Coupon.fromJson(v));
+//       });
+//     }*/
+//     if (json['cart_item'] != null) {
+//       cartItem = <CartItem>[];
+//       json['cart_item'].forEach((v) {
+//         cartItem!.add(new CartItem.fromJson(v));
+//       });
+//     }
+//     if (json['payments'] != null) {
+//       payments = <Payments>[];
+//       json['payments'].forEach((v) {
+//         payments!.add(new Payments.fromJson(v));
+//       });
+//     }
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['id'] = this.id;
+//     data['user_id'] = this.userId;
+//     data['cart_sub_total'] = this.cartSubTotal;
+//     data['cart_total'] = this.cartTotal;
+//     data['deleted_at'] = this.deletedAt;
+//     data['created_at'] = this.createdAt;
+//     data['updated_at'] = this.updatedAt;
+//     // data['coupon'] = this.coupon;
+//     if (this.coupon != null) {
+//       data['coupon'] = this.coupon!.toJson();
+//     }
+//     // data['coupon'] = this.coupon!.map((v) => v.toJson());
+//     // if (this.coupon != null) {
+//     //   data['coupon'] = this.coupon!.map((v) => v.toJson()).toList();
+//     // }
+//     if (this.cartItem != null) {
+//       data['cart_item'] = this.cartItem!.map((v) => v.toJson()).toList();
+//     }
+//     if (this.payments != null) {
+//       data['payments'] = this.payments!.map((v) => v.toJson()).toList();
+//     }
+//     return data;
+//   }
+// }
+
+
 
 class CartData {
-  int? id;
+  RxInt id = 0.obs;
   int? userId;
   String? cartSubTotal;
   String? cartTotal;
@@ -37,7 +119,7 @@ class CartData {
   List<Payments>? payments;
 
   CartData(
-      {this.id,
+      {int? id,
         this.userId,
         this.cartSubTotal,
         this.cartTotal,
@@ -46,64 +128,58 @@ class CartData {
         this.updatedAt,
         this.cartItem,
         this.coupon,
-        this.payments});
+        this.payments}) {
+    if (id != null) {
+      this.id.value = id;
+    }
+  }
 
   CartData.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id.value = json['id'] ?? 0;
     userId = json['user_id'];
     cartSubTotal = json['cart_sub_total'];
     cartTotal = json['cart_total'];
     deletedAt = json['deleted_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    coupon =
-    json['coupon'] != null ? new Coupon.fromJson(json['coupon']) : null;
-    /* if (json['coupon'] != null) {
-      coupon = <Coupon>[];
-      json['coupon'].forEach((v) {
-        coupon!.add(new Coupon.fromJson(v));
-      });
-    }*/
+    coupon = json['coupon'] != null ? Coupon.fromJson(json['coupon']) : null;
+
     if (json['cart_item'] != null) {
       cartItem = <CartItem>[];
       json['cart_item'].forEach((v) {
-        cartItem!.add(new CartItem.fromJson(v));
+        cartItem!.add(CartItem.fromJson(v));
       });
     }
     if (json['payments'] != null) {
       payments = <Payments>[];
       json['payments'].forEach((v) {
-        payments!.add(new Payments.fromJson(v));
+        payments!.add(Payments.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['cart_sub_total'] = this.cartSubTotal;
-    data['cart_total'] = this.cartTotal;
-    data['deleted_at'] = this.deletedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    // data['coupon'] = this.coupon;
-    if (this.coupon != null) {
-      data['coupon'] = this.coupon!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id.value;
+    data['user_id'] = userId;
+    data['cart_sub_total'] = cartSubTotal;
+    data['cart_total'] = cartTotal;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (coupon != null) {
+      data['coupon'] = coupon!.toJson();
     }
-    // data['coupon'] = this.coupon!.map((v) => v.toJson());
-    // if (this.coupon != null) {
-    //   data['coupon'] = this.coupon!.map((v) => v.toJson()).toList();
-    // }
-    if (this.cartItem != null) {
-      data['cart_item'] = this.cartItem!.map((v) => v.toJson()).toList();
+    if (cartItem != null) {
+      data['cart_item'] = cartItem!.map((v) => v.toJson()).toList();
     }
-    if (this.payments != null) {
-      data['payments'] = this.payments!.map((v) => v.toJson()).toList();
+    if (payments != null) {
+      data['payments'] = payments!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
+
 
 class CartItem {
   int? id;

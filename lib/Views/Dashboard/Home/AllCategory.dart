@@ -64,14 +64,16 @@ class _AllCategoryState extends State<AllCategory> {
                 crossAxisCount: 3,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 20,
+                // childAspectRatio: 2
+
               ),
               itemBuilder: (context, index) => InkWell(
                 onTap: () {
-                  Get.to(Product(), arguments: {
-                    // 'product': data[index],
-                    'categoryID': data[index].id.toString(),
-                    'productCategory': data[index].name.toString(),
-                  });
+                  Get.to( () =>   Product(), arguments: [
+                    data[index].name,
+                    data[index].id,
+                  ]
+                  );
                 },
                 child: Column(
                   children: [

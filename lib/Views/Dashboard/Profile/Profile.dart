@@ -87,25 +87,33 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                           const SizedBox(width: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('User Name',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    color: ColorStyle.themeColor,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                              InkWell(
-                                onTap: () {
-                                  Get.to(() => EditProfile());
-                                },
-                                child: Text('Edit Profile',
+                          Obx(
+                            () => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                siteSettingData.value.data!.profile!.name != null?
+                                Text('${siteSettingData.value.data!.profile!.name}',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 15,
+                                      fontSize: 20,
+                                      color: ColorStyle.themeColor,
+                                      fontWeight: FontWeight.bold,
+                                    )):Text('User Name',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 20,
+                                      color: ColorStyle.themeColor,
+                                      fontWeight: FontWeight.bold,
                                     )),
-                              ),
-                            ],
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(() => EditProfile());
+                                  },
+                                  child: Text('Edit Profile',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 15,
+                                      )),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       )

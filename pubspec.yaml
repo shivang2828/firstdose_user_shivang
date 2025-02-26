@@ -46,7 +46,13 @@ dependencies:
   sign_in_button: ^3.2.0
   intl: ^0.20.2
   cached_network_image: ^3.4.1
-
+  connectivity_plus: ^6.1.3
+  fluttertoast: ^8.2.12
+  pinch_zoom: ^2.0.0
+  infinite_scroll_pagination: ^5.0.0
+  stylish_bottom_bar: ^1.1.0
+  permission_handler: ^11.4.0
+  google_maps_flutter: ^2.10.1
 
   html: ^0.15.5
 
