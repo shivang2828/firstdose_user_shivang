@@ -42,7 +42,7 @@ The FirstDose project offers a unified mobile platform that blends medicine disc
 
 | Home Page | My Orders |
 |-----------|-----------|
-| ![Home](screenshots/HomePage.jpg) | ![Orders](screenshots/MyOrders.jpg) |
+| ![Home](screenshots/HomePage.jpg) | ![Orders](screenshots/MyOrder.jpg) |
 
 | Categories | Cart |
 |-----------|------|
