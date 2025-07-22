@@ -38,11 +38,11 @@ The FirstDose project offers a unified mobile platform that blends medicine disc
 
 | Sign Up | Sign In | Home Page |
 |--------|--------|-----------|
-| ![Sign Up](screenshots/Login.png) | ![Sign In](screenshots/Login.png) | ![Home](screenshots/home.png) |
+| ![Sign Up](screenshots/Login.jpg) | ![Sign In](screenshots/Login.jpg) | ![Home](screenshots/home.j) |
 
 | My Orders | Categories | Cart |
 |-----------|------------|------|
-| ![Orders](screenshots/MyOrders.png) | ![Categories](screenshots/Category.png) | ![Cart](screenshots/Cart.png) |
+| ![Orders](screenshots/MyOrders.jpg) | ![Categories](screenshots/Category.jpg) | ![Cart](screenshots/Cart.jpg) |
 
 ## 🧩 Installation Guide
 
