@@ -36,13 +36,18 @@ The FirstDose project offers a unified mobile platform that blends medicine disc
 
 ## 📸 Screenshots
 
-| Sign Up | Sign In | Home Page |
-|--------|--------|-----------|
-| ![Sign Up](screenshots/Login.jpg) | ![Sign In](screenshots/Login.jpg) | ![Home](screenshots/home.j) |
+| Sign Up | Sign In |
+|--------|--------|
+| ![Sign Up](screenshots/Login.jpg) | ![Sign In](screenshots/Login.jpg) |
 
-| My Orders | Categories | Cart |
-|-----------|------------|------|
-| ![Orders](screenshots/MyOrders.jpg) | ![Categories](screenshots/Category.jpg) | ![Cart](screenshots/Cart.jpg) |
+| Home Page | My Orders |
+|-----------|-----------|
+| ![Home](screenshots/home.jpg) | ![Orders](screenshots/MyOrders.jpg) |
+
+| Categories | Cart |
+|-----------|------|
+| ![Categories](screenshots/Category.jpg) | ![Cart](screenshots/Cart.jpg) |
+
 
 ## 🧩 Installation Guide
 
@@ -77,5 +82,4 @@ This project is licensed under the [MIT License](LICENSE).
 ## 👨‍💻 Developed By
 
 **Shivang Gaur**  
-Roll No: 2121471  
-CGC College of Engineering, Landran
+
